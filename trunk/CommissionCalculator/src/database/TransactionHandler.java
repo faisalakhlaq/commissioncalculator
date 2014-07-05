@@ -65,78 +65,6 @@ public class TransactionHandler {
 		}
 	}
 
-	public Vector<String> getSchemeNames() {
-		Vector<String> names = null;
-		DbConnection db = DbConnection.getInstance();
-		Connection conn = db.getConnection();
-
-		String query = "Select scheme_name from scheme;";
-		try {
-
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(query);
-			if (rs != null) {
-				names = new Vector<String>();
-				while (rs.next()) {
-					names.add(rs.getString("scheme_name"));
-				}
-			}
-		} catch (SQLException e) {
-			System.out.println("SQL Exception: " + e.getMessage());
-			e.printStackTrace();
-		}
-		return names;
-	}
-
-	// public Vector<Transaction> getTransactionsByDate(Date from, Date to) {
-	// Vector<Transaction> result = null;
-	// DbConnection db = DbConnection.getInstance();
-	// Connection conn = db.getConnection();
-	// PreparedStatement stmt = null;
-	//
-	// if (conn == null) {
-	// }
-	// try {
-	// java.sql.Date fromDate = new java.sql.Date(from.getTime());
-	// java.sql.Date toDate = new java.sql.Date(to.getTime());
-	//
-	// String query = "SELECT * FROM TRANSACTION WHERE DATE < '" + toDate
-	// + "' AND DATE > '" + fromDate + "';";
-	//
-	// System.out.println("Executing Query: " + query);
-	//
-	// Statement st = conn.createStatement();
-	// ResultSet rs = st.executeQuery(query);
-	// if (rs != null) {
-	// result = new Vector<Transaction>();
-	// while (rs.next()) {
-	// Transaction tr = new Transaction();
-	// tr.setDate(rs.getDate("Date"));
-	// result.add(tr);
-	//
-	// }
-	// }
-	// } catch (SQLException e1) {
-	// Logger.getGlobal().severe(
-	// "Error occured while deleted the schemeName: "
-	// + e1.getMessage());
-	// System.out.println("SQLException: " + e1.getMessage());
-	// e1.printStackTrace();
-	// } finally {
-	// try {
-	// if (stmt != null) {
-	// stmt.close();
-	// }
-	// } catch (SQLException e1) {
-	// Logger.getGlobal().severe(
-	// "Error occured while delete schemeName: "
-	// + e1.getMessage());
-	// System.out.println("SQLException: " + e1.getMessage());
-	// e1.printStackTrace();
-	// }
-	// }
-	// return result;
-	// }
 	public Vector<Transaction> getTransactionsByDate(Date to, Date from)
 			throws Exception {
 		Vector<Transaction> result = null;
@@ -150,8 +78,8 @@ public class TransactionHandler {
 			stmt = con.createStatement();
 			java.sql.Date fromDate = new java.sql.Date(from.getTime());
 			java.sql.Date toDate = new java.sql.Date(to.getTime());
-			String query = "SELECT * FROM TRANSACTION WHERE DATE < '" + toDate
-					+ "' AND DATE > '" + fromDate + "';";
+			String query = "SELECT * FROM TRANSACTION WHERE DATE <= '" + toDate
+					+ "' AND DATE >= '" + fromDate + "';";
 			System.out.println("Query Executed: " + query);
 			ResultSet rs = stmt.executeQuery(query);
 

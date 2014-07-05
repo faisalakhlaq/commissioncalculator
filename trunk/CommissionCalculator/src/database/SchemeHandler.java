@@ -183,4 +183,26 @@ public class SchemeHandler
 		}
 		return schemeVector;
 	}
+	public Vector<String> getSchemeNames() {
+		Vector<String> names = null;
+		DbConnection db = DbConnection.getInstance();
+		Connection conn = db.getConnection();
+
+		String query = "Select scheme_name from scheme;";
+		try {
+
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			if (rs != null) {
+				names = new Vector<String>();
+				while (rs.next()) {
+					names.add(rs.getString("scheme_name"));
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return names;
+	}
 }
