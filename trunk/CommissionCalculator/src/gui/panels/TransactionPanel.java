@@ -23,17 +23,17 @@ import database.TransactionHandler;
 
 @SuppressWarnings("serial")
 public class TransactionPanel extends AbstractPanel {
-	private JButton savebtn = null;
+	private JButton saveBtn = null;
 	
-	private JButton refreshtbtn = null;
+	private JButton refreshtBtn = null;
 
-	private JLabel amountlbl = null;
+	private JLabel amountLbl = null;
 
-	private JLabel datelbl = null;
+	private JLabel datLbl = null;
 
-	private JLabel schemelbl = null;
+	private JLabel schemeLbl = null;
 
-	private JTextField amounttxt = null;
+	private JTextField amountTxt = null;
 
 	private JComboBox<String> schemeNamecbx = null;
 
@@ -78,11 +78,11 @@ public class TransactionPanel extends AbstractPanel {
 	public GuiPanel getButtonPanel() {
 		GuiPanel buttonPanel = new GuiPanel();
 
-		savebtn = new JButton("Save");
-		savebtn.addActionListener(new ActionListener() {
+		saveBtn = new JButton("Save");
+		saveBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String aName = amounttxt.getText();
+				String aName = amountTxt.getText();
 				String sName = schemeNamecbx.getSelectedItem().toString();
 
 				java.util.Date date = datePicker.getDate();
@@ -91,8 +91,8 @@ public class TransactionPanel extends AbstractPanel {
 				displayMessage(true);
 			}
 		});
-		refreshtbtn = new JButton("Refresh");
-		refreshtbtn.addActionListener(new ActionListener() {
+		refreshtBtn = new JButton("Refresh");
+		refreshtBtn.addActionListener(new ActionListener() {
 			
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
@@ -101,8 +101,8 @@ public class TransactionPanel extends AbstractPanel {
 					});
 				
 
-		buttonPanel.add(savebtn);
-		buttonPanel.add(refreshtbtn);
+		buttonPanel.add(saveBtn);
+		buttonPanel.add(refreshtBtn);
 
 		return buttonPanel;
 	}
@@ -110,12 +110,12 @@ public class TransactionPanel extends AbstractPanel {
 	public GuiPanel getCenterPanel() {
 		GuiPanel centerPanel = new GuiPanel();
 
-		amountlbl = new JLabel("Amount");
-		datelbl = new JLabel("Date");
-		schemelbl = new JLabel("Scheme");
+		amountLbl = new JLabel("Amount");
+		datLbl = new JLabel("Date");
+		schemeLbl = new JLabel("Scheme");
 		resultMsgLbl = new JLabel();
 
-		amounttxt = new JTextField(15);
+		amountTxt = new JTextField(15);
 		datePicker = new JXDatePicker();
 		datePicker.setDate(Calendar.getInstance().getTime());
 		datePicker.setFormats(new SimpleDateFormat("yyyy.MM.dd"));
@@ -138,17 +138,17 @@ public class TransactionPanel extends AbstractPanel {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 1;
-		centerPanel.add(amountlbl, c);
+		centerPanel.add(amountLbl, c);
 
 		c.gridx = 1;
 		c.gridy = 0;
 		c.gridwidth = 1;
-		centerPanel.add(amounttxt, c);
+		centerPanel.add(amountTxt, c);
 
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;
-		centerPanel.add(datelbl, c);
+		centerPanel.add(datLbl, c);
 
 		c.gridx = 1;
 		c.gridy = 1;
@@ -158,7 +158,7 @@ public class TransactionPanel extends AbstractPanel {
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 1;
-		centerPanel.add(schemelbl, c);
+		centerPanel.add(schemeLbl, c);
 
 		c.gridx = 1;
 		c.gridy = 2;

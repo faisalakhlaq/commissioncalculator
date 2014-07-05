@@ -8,6 +8,8 @@ import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -22,8 +24,6 @@ import table.SchemeTableModel;
 public class SchemeInformatioPanel extends AbstractPanel
 {
 	private JButton exitBtn = null;
-
-	private JButton refreshBtn = null;
 
 	private Vector<Scheme> schemeList;
 
@@ -67,11 +67,16 @@ public class SchemeInformatioPanel extends AbstractPanel
 		GuiPanel buttonPanel = new GuiPanel();
 
 		exitBtn = new JButton("Exit");
-		refreshBtn = new JButton("Refresh");
-
+		exitBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				DesktopTabbedPane desktop = DesktopTabbedPane.getInstance();
+				desktop.removeTabAt(desktop.getSelectedIndex());
+			}
+		});
 		buttonPanel.add(exitBtn);
-		buttonPanel.add(refreshBtn);
-
 		return buttonPanel;
 	}
 
@@ -84,8 +89,8 @@ public class SchemeInformatioPanel extends AbstractPanel
 		// Create the scroll pane and add the table to it.
 		JScrollPane scrollPane = new JScrollPane(table);
 
-		scrollPane.setMinimumSize(new Dimension(650, 450));
-		scrollPane.setPreferredSize(new Dimension(650, 550));
+		scrollPane.setMinimumSize(new Dimension(500, 200));
+//		scrollPane.setPreferredSize(new Dimension(500, 200));
 
 		GuiPanel p = new GuiPanel();
 		p.setLayout(new GridBagLayout());
