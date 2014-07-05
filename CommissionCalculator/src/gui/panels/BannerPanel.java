@@ -10,19 +10,24 @@ import java.awt.GridBagLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import model.CompanyInformation;
+
 @SuppressWarnings("serial")
 public class BannerPanel extends AbstractPanel
-
 {
-	public JLabel shoplbl = new JLabel("SAMI-ULLAH PHOTOSTATE");
-	public JLabel commissionLabel = new JLabel("Commission Calculator");
+	public JLabel companyName = null;
+
+	public JLabel softwareName = null;
+
 	private JLabel pictureLabel = new JLabel();
 
-	public BannerPanel() {
+	public BannerPanel()
+	{
 		addPanels();
 	}
 
-	public void addPanels() {
+	public void addPanels()
+	{
 		GuiPanel centerpanel = getCenterPanel();
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -31,18 +36,22 @@ public class BannerPanel extends AbstractPanel
 		c.gridy = 1;
 		c.gridwidth = 2;
 		add(centerpanel, c);
-
 	}
 
 	@Override
-	public GuiPanel getCenterPanel() {
+	public GuiPanel getCenterPanel()
+	{
+		CompanyInformation info = new CompanyInformation();
+
 		GuiPanel centerPanel = new GuiPanel();
 		Font f = new Font("Monospaced", Font.PLAIN, 15);
-		commissionLabel.setFont(f);
+		softwareName = new JLabel(info.getSoftwareTitle());
+		softwareName.setFont(f);
 		Font fn = new Font("Monospaced", Font.BOLD, 25);
-		shoplbl.setFont(fn);
-		ImageIcon icon = new ImageIcon(getClass().getResource(
-				"/resources/dollars.png"));
+		companyName = new JLabel(info.getCompanyName());
+		companyName.setFont(fn);
+
+		ImageIcon icon = new ImageIcon(getClass().getResource("/resources/dollars.png"));
 		pictureLabel.setIcon(icon);
 
 		centerPanel.setLayout(new GridBagLayout());
@@ -58,25 +67,27 @@ public class BannerPanel extends AbstractPanel
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.gridheight = 1;
-		centerPanel.add(shoplbl, c);
+		centerPanel.add(companyName, c);
 
 		c.gridx = 1;
 		c.gridy = 1;
 		c.gridwidth = 1;
 		c.gridheight = 1;
-		centerPanel.add(commissionLabel, c);
+		centerPanel.add(softwareName, c);
 
 		return centerPanel;
 	}
 
 	@Override
-	public GuiPanel getButtonPanel() {
+	public GuiPanel getButtonPanel()
+	{
 
 		return null;
 	}
 
 	@Override
-	public GuiPanel getBannerPanel() {
+	public GuiPanel getBannerPanel()
+	{
 
 		return null;
 	}
