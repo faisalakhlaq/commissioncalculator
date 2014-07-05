@@ -1,6 +1,6 @@
 package gui.panels;
 
-import gui.GuiFrame;
+import gui.AbstractPanel;
 import gui.GuiPanel;
 
 import java.awt.BorderLayout;
@@ -19,20 +19,25 @@ import model.Scheme;
 import table.SchemeTableModel;
 
 @SuppressWarnings("serial")
-public class SchemeInformatioPanel extends GuiFrame {
+public class SchemeInformatioPanel extends AbstractPanel
+{
+	private JButton exitBtn = null;
 
-	private JButton exitbtn = null;
+	private JButton refreshBtn = null;
 
 	private Vector<Scheme> schemeList;
 
-	private String[] columnNames = { "Scheme Name ", "Company Name" };
+	private String[] columnNames =
+	{ "Scheme Name ", "Company Name", "1-1000", "1001-2500", "2501-4000", "4001-6000", "6001-8000", "8001-10000", "10001-13000", "13001-15000" };
 
-	public SchemeInformatioPanel(Vector<Scheme> schemeList) {
+	public SchemeInformatioPanel(Vector<Scheme> schemeList)
+	{
 		this.schemeList = schemeList;
 		addPanels();
 	}
 
-	public void addPanels() {
+	public void addPanels()
+	{
 		GuiPanel bannerPanel = getBannerPanel();
 		GuiPanel centerPanel = getCenterPanel();
 		GuiPanel buttonPanel = getButtonPanel();
@@ -57,33 +62,30 @@ public class SchemeInformatioPanel extends GuiFrame {
 
 	}
 
-	public GuiPanel getButtonPanel() {
+	public GuiPanel getButtonPanel()
+	{
 		GuiPanel buttonPanel = new GuiPanel();
 
-		exitbtn = new JButton("Exit");
+		exitBtn = new JButton("Exit");
+		refreshBtn = new JButton("Refresh");
 
-		buttonPanel.add(exitbtn);
+		buttonPanel.add(exitBtn);
+		buttonPanel.add(refreshBtn);
 
 		return buttonPanel;
 	}
 
-	public GuiPanel getCenterPanel() {
+	public GuiPanel getCenterPanel()
+	{
 		SchemeTableModel model = new SchemeTableModel(schemeList, columnNames);
-		// ADDED THIS
-		// JTable table = new JTable(new MyTableModel()); //OLD
 		JTable table = new JTable(model); // NEW
 		table.setTableHeader(table.getTableHeader()); // ADDED THIS
-		// table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-
-		// Set up tool tips for column headers.
-		// table.getTableHeader()
-		// .setToolTipText(
-		// "Click to specify sorting; Control-Click to specify secondary sorting");
 
 		// Create the scroll pane and add the table to it.
 		JScrollPane scrollPane = new JScrollPane(table);
 
-		scrollPane.setPreferredSize(new Dimension(1000, 500));
+		scrollPane.setMinimumSize(new Dimension(650, 450));
+		scrollPane.setPreferredSize(new Dimension(650, 550));
 
 		GuiPanel p = new GuiPanel();
 		p.setLayout(new GridBagLayout());
@@ -103,15 +105,15 @@ public class SchemeInformatioPanel extends GuiFrame {
 		return p;
 	}
 
-	public GuiPanel getBannerPanel() {
+	public GuiPanel getBannerPanel()
+	{
 		GuiPanel bannerPanel = new GuiPanel();
 		bannerPanel.add(new JLabel("Scheme Information"), BorderLayout.CENTER);
 
 		return bannerPanel;
 	}
 
-	public void createAndShowGUI() {
-		pack();
-		this.setVisible(true);
+	public void createAndShowGUI()
+	{
 	}
 }

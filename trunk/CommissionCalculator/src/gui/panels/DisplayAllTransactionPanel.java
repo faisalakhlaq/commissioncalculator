@@ -86,21 +86,11 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 	public GuiPanel getCenterPanel()
 	{
 		TransactionTableModel model = new TransactionTableModel(transactionList, columnNames);
-		// ADDED THIS
-		// JTable table = new JTable(new MyTableModel()); //OLD
 		JTable table = new JTable(model); // NEW
 		table.setTableHeader(table.getTableHeader()); // ADDED THIS
-		// table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-
-		// Set up tool tips for column headers.
-		// table.getTableHeader()
-		// .setToolTipText(
-		// "Click to specify sorting; Control-Click to specify secondary sorting");
-
 		// Create the scroll pane and add the table to it.
 		JScrollPane scrollPane = new JScrollPane(table);
 
-		// scrollPane.setPreferredSize(new Dimension(1000, 500));
 		scrollPane.setMinimumSize(new Dimension(500, 150));
 		GuiPanel p = new GuiPanel();
 		p.setLayout(new GridBagLayout());
@@ -117,6 +107,31 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 		c.gridwidth = 1;
 		p.add(scrollPane, c);
 
+		/**
+		 * SchemeTableModel model = new SchemeTableModel(schemeList, columnNames);
+		JTable table = new JTable(model); // NEW
+		table.setTableHeader(table.getTableHeader()); // ADDED THIS
+
+		// Create the scroll pane and add the table to it.
+		JScrollPane scrollPane = new JScrollPane(table);
+
+		scrollPane.setPreferredSize(new Dimension(1000, 500));
+
+		GuiPanel p = new GuiPanel();
+		p.setLayout(new GridBagLayout());
+		p.setOpaque(true);
+		p.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = GridBagConstraints.LINE_START;
+		c.weightx = 0.25;
+		c.weighty = 0;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		p.add(scrollPane, c);
+		 */
 		return p;
 	}
 
