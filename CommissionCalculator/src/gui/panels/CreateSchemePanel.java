@@ -15,90 +15,108 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import utils.Helper;
-import database.CommissionTableHandler;
 import database.SchemeHandler;
 
 @SuppressWarnings("serial")
-public class CreateSchemePanel extends AbstractPanel {
+public class CreateSchemePanel extends AbstractPanel
+{
+	private JButton saveBtn = null;
 
-	private JButton savebtn = null;
+	private JButton clearBtn = null;
 
-	private JButton updatebtn = null;
+	private JButton updateBtn = null;
 
-	private JLabel schemename = null;
+	private JLabel schemeNameLbl = null;
 
-	private JLabel companyname = null;
+	private JLabel companyNameLbl = null;
 
-	private JTextField schemetxt = null;
+	private JTextField schemeTxt = null;
 
-	private JTextField companytxt = null;
+	private JTextField companyTxt = null;
 
 	private JLabel resultMsgLbl;
 
 	private JTextField[] amountTxt = new JTextField[10];
 
-	public CreateSchemePanel() {
-
+	public CreateSchemePanel()
+	{
 		addPanels();
 	}
 
-	public GuiPanel getButtonPanel() {
+	public GuiPanel getButtonPanel()
+	{
 		GuiPanel buttonPanel = new GuiPanel();
-		savebtn = new JButton("Save");
-		savebtn.addActionListener(new ActionListener() {
-
+		saveBtn = new JButton("Save");
+		saveBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String sName = schemetxt.getText();
-				String cName = companytxt.getText();
+			public void actionPerformed(ActionEvent arg0)
+			{
+				String sName = schemeTxt.getText();
+				String cName = companyTxt.getText();
 				SchemeHandler handler = new SchemeHandler();
-				handler.createScheme(sName, cName);
-				CommissionTableHandler comHandler = new CommissionTableHandler();
-				try {
+				try
+				{
 					double[] profit = getProfitAmount();
-					comHandler.insertCommissionRates(sName, profit[0],
-							profit[1], profit[2], profit[3], profit[4],
-							profit[5], profit[6], profit[7]);
+					handler.createScheme(sName, cName, profit[0], profit[1], profit[2], profit[3], profit[4], profit[5], profit[6], profit[7]);
 					displayMessage(true);
-				} catch (Exception e) {
+					clearTextFields();
+				}
+				catch (Exception e)
+				{
 					displayMessage(false);
-					JOptionPane.showMessageDialog(null, e.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		updatebtn = new JButton("UpDate");
-
-		buttonPanel.add(savebtn);
-		buttonPanel.add(updatebtn);
+		updateBtn = new JButton("UpDate");
+		clearBtn = new JButton("Clear");
+		clearBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				clearTextFields();
+			}
+		});
+		buttonPanel.add(saveBtn);
+		buttonPanel.add(updateBtn);
+		buttonPanel.add(clearBtn);
 
 		return buttonPanel;
 	}
 
-	private double[] getProfitAmount() throws Exception {
+	private double[] getProfitAmount() throws Exception
+	{
 		double[] profit = new double[8];
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 8; i++)
+		{
 			String amount = amountTxt[i].getText();
-			if (!Helper.isEmpty(amount) && Helper.isDigit(amount)) {
+			if (!Helper.isEmpty(amount) && Helper.isDigit(amount))
+			{
 				profit[i] = stringToDouble(amount);
-			} else {
+			}
+			else
+			{
 				throw new Exception("Amount cannot be empty or non numeric");
 			}
 		}
 		return profit;
 	}
 
-	private double stringToDouble(String st) {
+	private double stringToDouble(String st)
+	{
 		double result = 0;
 		result = Double.valueOf(st.trim());
 		return result;
 	}
 
-	public GuiPanel getCenterPanel() {
+	public GuiPanel getCenterPanel()
+	{
 		GuiPanel centerPanel = new GuiPanel();
 
-		schemename = new JLabel("Scheme Name: ");
-		companyname = new JLabel("Company Name: ");
+		schemeNameLbl = new JLabel("Scheme Name: ");
+		companyNameLbl = new JLabel("Company Name: ");
 		JLabel[] amountLbl = new JLabel[9];
 		amountLbl[0] = new JLabel("1-1000");
 		amountLbl[1] = new JLabel("1001-2500");
@@ -120,30 +138,30 @@ public class CreateSchemePanel extends AbstractPanel {
 		amountTxt[7] = new JTextField(5);
 
 		resultMsgLbl = new JLabel();
-		schemetxt = new JTextField(15);
-		companytxt = new JTextField(15);
+		schemeTxt = new JTextField(15);
+		companyTxt = new JTextField(15);
 		centerPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 1;
-		centerPanel.add(schemename, c);
+		centerPanel.add(schemeNameLbl, c);
 
 		c.gridx = 1;
 		c.gridy = 0;
 		c.gridwidth = 1;
-		centerPanel.add(schemetxt, c);
+		centerPanel.add(schemeTxt, c);
 
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;
-		centerPanel.add(companyname, c);
+		centerPanel.add(companyNameLbl, c);
 
 		c.gridx = 1;
 		c.gridy = 1;
 		c.gridwidth = 1;
-		centerPanel.add(companytxt, c);
+		centerPanel.add(companyTxt, c);
 
 		// /////////////////////////////////////////////////////////////////////////////////////////////
 		c.gridx = 0;
@@ -234,33 +252,58 @@ public class CreateSchemePanel extends AbstractPanel {
 		return centerPanel;
 	}
 
-	public GuiPanel getBannerPanel() {
+	public GuiPanel getBannerPanel()
+	{
 		GuiPanel bannerPanel = new GuiPanel();
 		bannerPanel.add(new JLabel("Create Scheme"), BorderLayout.CENTER);
 		return bannerPanel;
 	}
 
-	public void createAndShowGUI() {
+	public void createAndShowGUI()
+	{
 
 	}
 
-	private void displayMessage(final boolean success) {
-		Thread t = new Thread() {
-			public void run() {
-				try {
+	private void displayMessage(final boolean success)
+	{
+		Thread t = new Thread()
+		{
+			public void run()
+			{
+				try
+				{
 
-					if (success) {
+					if (success)
+					{
 						resultMsgLbl.setText("Scheme Created Successfully");
-					} else {
+					}
+					else
+					{
 						resultMsgLbl.setText("Sorry! create unsuccessful");
 					}
 					Thread.sleep(2000);
 					resultMsgLbl.setText(null);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+				{
 					e.printStackTrace();
 				}
 			}
 		};
 		t.start();
+	}
+
+	private void clearTextFields()
+	{
+		schemeTxt.setText(null);
+		companyTxt.setText(null);
+		amountTxt[0].setText(null);
+		amountTxt[1].setText(null);
+		amountTxt[2].setText(null);
+		amountTxt[3].setText(null);
+		amountTxt[4].setText(null);
+		amountTxt[5].setText(null);
+		amountTxt[6].setText(null);
+		amountTxt[7].setText(null);
 	}
 }

@@ -27,7 +27,7 @@ import database.TransactionHandler;
 @SuppressWarnings("serial")
 public class TransactionReportPanel extends AbstractPanel
 {
-	private JButton getreportbtn = null;
+	private JButton getReportBtn = null;
 
 	private JButton refreshbtn = null;
 
@@ -56,8 +56,8 @@ public class TransactionReportPanel extends AbstractPanel
 	{
 		GuiPanel buttonPanel = new GuiPanel();
 
-		getreportbtn = new JButton("Get Report");
-		getreportbtn.addActionListener(new ActionListener()
+		getReportBtn = new JButton("Get Report");
+		getReportBtn.addActionListener(new ActionListener()
 		{
 
 			@Override
@@ -88,7 +88,7 @@ public class TransactionReportPanel extends AbstractPanel
 				{
 					DisplayAllTransactionPanel trPnl = new DisplayAllTransactionPanel(transactionList);
 					DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-					desktopPane.addPanel(trPnl);
+					desktopPane.addPanel("Transaction Report", trPnl);
 				}
 				else
 				{
@@ -107,7 +107,7 @@ public class TransactionReportPanel extends AbstractPanel
 				populateSchemeNamesCbx();
 			}
 		});
-		buttonPanel.add(getreportbtn);
+		buttonPanel.add(getReportBtn);
 		buttonPanel.add(refreshbtn);
 		return buttonPanel;
 	}
