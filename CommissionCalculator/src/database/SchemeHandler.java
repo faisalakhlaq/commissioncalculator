@@ -11,66 +11,58 @@ import model.Scheme;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class SchemeHandler
-{
+public class SchemeHandler {
 	private DbConnection db = null;
 
-	public SchemeHandler()
-	{
+	public SchemeHandler() {
 	}
 
-	public void deleteScheme(String schemeName)
-	{
+	public void deleteScheme(String schemeName) {
 		DbConnection db = DbConnection.getInstance();
 		Connection conn = db.getConnection();
 		PreparedStatement stmt = null;
 
-		if (conn == null)
-		{
+		if (conn == null) {
 			return;
 		}
-		try
-		{
-			stmt = (PreparedStatement) conn.prepareStatement("DELETE from SCHEME where SCHEME_NAME = '" + schemeName + "';");
+		try {
+			stmt = (PreparedStatement) conn
+					.prepareStatement("DELETE from SCHEME where SCHEME_NAME = '"
+							+ schemeName + "';");
 			stmt.executeUpdate();
-		}
-		catch (SQLException e1)
-		{
-			Logger.getGlobal().severe("Error occured while deleted the schemeName: " + e1.getMessage());
+		} catch (SQLException e1) {
+			Logger.getGlobal().severe(
+					"Error occured while deleted the schemeName: "
+							+ e1.getMessage());
 			System.out.println("SQLException: " + e1.getMessage());
 			e1.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
+		} finally {
+			try {
 				DbConnection.getInstance();
-				if (stmt != null)
-				{
+				if (stmt != null) {
 					stmt.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while delete schemeName: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while delete schemeName: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
 			}
 		}
 	}
 
-	public void createScheme(String sName, String cName, double a, double b, double c, double d, double e, double f, double g, double h) throws SQLException
-	{
+	public void createScheme(String sName, String cName, double a, double b,
+			double c, double d, double e, double f, double g, double h)
+			throws SQLException {
 		DbConnection db = DbConnection.getInstance();
 		Connection conn = db.getConnection();
 		PreparedStatement stmt = null;
 
-		if (conn == null)
-		{
+		if (conn == null) {
 			return;
 		}
-		try
-		{
+		try {
 			stmt = (PreparedStatement) conn
 					.prepareStatement("INSERT INTO scheme(company_name, scheme_name, 1_1000, 1001_2500, 2501_4000, 4001_6000, 6001_8000, 8001_10000, 10001_13000, 13001_15000) "
 							+ "VALUES (?,?,?,?,?,?,?,?,?,?)");
@@ -87,27 +79,23 @@ public class SchemeHandler
 			stmt.setDouble(10, h);
 
 			stmt.executeUpdate();
-		}
-		catch (SQLException e1)
-		{
-			Logger.getGlobal().severe("Error occured while adding the area code: " + e1.getMessage());
+		} catch (SQLException e1) {
+			Logger.getGlobal().severe(
+					"Error occured while adding the area code: "
+							+ e1.getMessage());
 			System.out.println("SQLException: " + e1.getMessage());
 			e1.printStackTrace();
 			throw new SQLException(e1.getMessage());
-		}
-		finally
-		{
-			try
-			{
+		} finally {
+			try {
 				DbConnection.getInstance();
-				if (stmt != null)
-				{
+				if (stmt != null) {
 					stmt.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while inserting the area code: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while inserting the area code: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
 				throw new SQLException(e1.getMessage());
@@ -115,8 +103,7 @@ public class SchemeHandler
 		}
 	}
 
-	public Vector<Scheme> getAllSchemes() throws Exception
-	{
+	public Vector<Scheme> getAllSchemes() throws Exception {
 		Vector<Scheme> schemeVector = null;
 
 		db = DbConnection.getInstance();
@@ -125,22 +112,18 @@ public class SchemeHandler
 
 		Statement stmt = null;
 
-		if (con == null)
-		{
+		if (con == null) {
 			throw new Exception("Unable to connect to the database!");
 		}
-		try
-		{
+		try {
 			stmt = con.createStatement();
 			String query = "SELECT * FROM scheme";
 			System.out.println("Query Executed: " + query);
 			ResultSet rs = stmt.executeQuery(query);
 
-			if (rs != null)
-			{
+			if (rs != null) {
 				schemeVector = new Vector<Scheme>();
-				while (rs.next())
-				{
+				while (rs.next()) {
 					Scheme sc = new Scheme();
 					sc.setSchemeName(rs.getString("scheme_name"));
 					sc.setCompanyName(rs.getString("company_name"));
@@ -155,34 +138,34 @@ public class SchemeHandler
 					schemeVector.add(sc);
 				}
 			}
-		}
-		catch (Exception e1)
-		{
-			Logger.getGlobal().severe("Unable to retrieve scheme details from the database. " + e1.getMessage());
+		} catch (Exception e1) {
+			Logger.getGlobal().severe(
+					"Unable to retrieve scheme details from the database. "
+							+ e1.getMessage());
 			System.out.println("SQLException: " + e1.getMessage());
 			e1.printStackTrace();
-			throw new Exception("Unable to retrieve scheme details data from the database!<p>" + e1.getMessage());
-		}
-		finally
-		{
-			try
-			{
+			throw new Exception(
+					"Unable to retrieve scheme details data from the database!<p>"
+							+ e1.getMessage());
+		} finally {
+			try {
 				DbConnection.closeConnection();
-				if (stmt != null)
-				{
+				if (stmt != null) {
 					stmt.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while closing the connection or statement: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the connection or statement: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
-				throw new SQLException("Error occured while closing the connection or statement.");
+				throw new SQLException(
+						"Error occured while closing the connection or statement.");
 			}
 		}
 		return schemeVector;
 	}
+
 	public Vector<String> getSchemeNames() {
 		Vector<String> names = null;
 		DbConnection db = DbConnection.getInstance();
@@ -204,5 +187,28 @@ public class SchemeHandler
 			e.printStackTrace();
 		}
 		return names;
+	}
+
+	public double getProfit(String range, String schemeName) {
+		double result = 0;
+		DbConnection db = DbConnection.getInstance();
+		Connection conn = db.getConnection();
+
+		String query = "Select " + range + " from scheme where scheme_name = '"
+				+ schemeName + "';";
+		System.out.println("Executing query: " + query);
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			if (rs != null) {
+				while (rs.next()) {
+					result = rs.getDouble(range);
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

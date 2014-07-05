@@ -41,7 +41,7 @@ public class Transaction
 		this.date = date;
 	}
 
-	public String getSchemename()
+	public String getSchemeName()
 	{
 		return schemename;
 	}

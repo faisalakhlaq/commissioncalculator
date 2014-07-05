@@ -136,11 +136,11 @@ public class TransactionHandler {
 			java.sql.Date toDate = new java.sql.Date(to.getTime());
 			String query = null;
 			if (schemeName == null) {
-				query = "SELECT * FROM TRANSACTION WHERE DATE < '" + toDate
-						+ "' AND DATE > '" + fromDate + "';";
+				query = "SELECT * FROM TRANSACTION WHERE DATE <= '" + toDate
+						+ "' AND DATE >= '" + fromDate + "';";
 			} else {
-				query = "SELECT * FROM TRANSACTION WHERE DATE < '" + toDate
-						+ "' AND DATE > '" + fromDate + "' AND schemename = '"
+				query = "SELECT * FROM TRANSACTION WHERE DATE <= '" + toDate
+						+ "' AND DATE >= '" + fromDate + "' AND schemename = '"
 						+ schemeName + "';";
 			}
 			System.out.println("Query Executed: " + query);

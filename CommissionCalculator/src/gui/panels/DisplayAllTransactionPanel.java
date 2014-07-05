@@ -29,7 +29,7 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 	private Vector<Transaction> transactionList = null;
 
 	private String[] columnNames =
-	{ "Amount ", "Date", "Scheme" };
+	{ "Amount ", "Date", "Scheme","Profit" };
 
 	public DisplayAllTransactionPanel(Vector<Transaction> list)
 	{

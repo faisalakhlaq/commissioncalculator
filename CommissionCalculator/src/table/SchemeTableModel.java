@@ -9,10 +9,10 @@ import model.Scheme;
 @SuppressWarnings("serial")
 public class SchemeTableModel extends AbstractTableModel
 {
-	private static final int COMPANY_NAME = 0;
-
-	private static final int SCHEME_NAME = 1;
-
+	private static final int SCHEME_NAME = 0;
+	
+	private static final int COMPANY_NAME = 1;
+	
 	private static final int ONE = 2;
 
 	private static final int TWO = 3;
