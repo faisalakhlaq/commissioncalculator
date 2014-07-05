@@ -22,6 +22,7 @@ import model.Transaction;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import database.SchemeHandler;
 import database.TransactionHandler;
 
 @SuppressWarnings("serial")
@@ -131,16 +132,17 @@ public class TransactionReportPanel extends AbstractPanel
 		toDatePicker.setFormats(new SimpleDateFormat("yyyy.MM.dd"));
 
 		schemeNamecbx = new JComboBox<String>();
-		TransactionHandler handler = new TransactionHandler();
-		Vector<String> schemeNames = handler.getSchemeNames();
-		if (schemeNames == null)
-		{
-			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>());
-		}
-		else
-		{
-			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>(schemeNames));
-		}
+		populateSchemeNamesCbx();
+//		SchemeHandler handler = new SchemeHandler();
+//		Vector<String> schemeNames = handler.getSchemeNames();
+//		if (schemeNames == null)
+//		{
+//			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>());
+//		}
+//		else
+//		{
+//			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>(schemeNames));
+//		}
 
 		centerPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -202,7 +204,7 @@ public class TransactionReportPanel extends AbstractPanel
 		{
 			schemeNamecbx = new JComboBox<String>();
 		}
-		TransactionHandler handler = new TransactionHandler();
+		SchemeHandler handler = new SchemeHandler();
 		Vector<String> schemeNames = handler.getSchemeNames();
 		if (schemeNames == null)
 		{

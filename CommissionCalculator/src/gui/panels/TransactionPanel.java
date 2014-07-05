@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import database.SchemeHandler;
 import database.TransactionHandler;
 
 @SuppressWarnings("serial")
@@ -208,7 +209,7 @@ public class TransactionPanel extends AbstractPanel {
 		if (schemeNamecbx == null) {
 			schemeNamecbx = new JComboBox<String>();
 		}
-		TransactionHandler handler = new TransactionHandler();
+		SchemeHandler handler = new SchemeHandler();
 		Vector<String> schemeNames = handler.getSchemeNames();
 		if (schemeNames == null) {
 			schemeNamecbx
