@@ -18,7 +18,7 @@ public class MainView extends GuiFrame
 
 	private CommissionCalcToolBar toolBar = new CommissionCalcToolBar();
 
-	private BannerPanel bannerpanel = new BannerPanel();
+	private BannerPanel bannerPanel = new BannerPanel();
 
 	public MainView()
 	{
@@ -120,7 +120,7 @@ public class MainView extends GuiFrame
 		GuiPanel p = new GuiPanel();
 		p.setLayout(new BorderLayout());
 		p.add(BorderLayout.CENTER, desktopPane);
-		p.add(BorderLayout.NORTH, bannerpanel);
+		p.add(BorderLayout.NORTH, bannerPanel);
 
 		pane.add(BorderLayout.CENTER, p);
 	}

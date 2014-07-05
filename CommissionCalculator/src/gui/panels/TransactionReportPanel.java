@@ -29,17 +29,17 @@ public class TransactionReportPanel extends AbstractPanel
 {
 	private JButton getReportBtn = null;
 
-	private JButton refreshbtn = null;
+	private JButton refreshBtn = null;
 
-	private JLabel fromdatelbl = null;
+	private JLabel fromDateLbl = null;
 
-	private JLabel todatelbl = null;
+	private JLabel toDateLbl = null;
 
-	private JLabel accordingtoschemelbl = null;
+	private JLabel acToSchemeLbl = null;
 
 	private JCheckBox accordingToScheme = null;
 
-	private JLabel schemelbl = null;
+	private JLabel schemeLbl = null;
 
 	private JXDatePicker fromDatePicker = null;
 
@@ -88,7 +88,7 @@ public class TransactionReportPanel extends AbstractPanel
 				{
 					DisplayAllTransactionPanel trPnl = new DisplayAllTransactionPanel(transactionList);
 					DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-					desktopPane.addPanel("Transaction Report", trPnl);
+					desktopPane.addPanel("Report", trPnl);
 				}
 				else
 				{
@@ -97,8 +97,8 @@ public class TransactionReportPanel extends AbstractPanel
 				}
 			}
 		});
-		refreshbtn = new JButton("Refresh");
-		refreshbtn.addActionListener(new ActionListener()
+		refreshBtn = new JButton("Refresh");
+		refreshBtn.addActionListener(new ActionListener()
 		{
 
 			@Override
@@ -108,7 +108,7 @@ public class TransactionReportPanel extends AbstractPanel
 			}
 		});
 		buttonPanel.add(getReportBtn);
-		buttonPanel.add(refreshbtn);
+		buttonPanel.add(refreshBtn);
 		return buttonPanel;
 	}
 
@@ -116,10 +116,10 @@ public class TransactionReportPanel extends AbstractPanel
 	{
 		GuiPanel centerPanel = new GuiPanel();
 
-		fromdatelbl = new JLabel("From Date");
-		todatelbl = new JLabel("To Date");
-		accordingtoschemelbl = new JLabel("According To Scheme");
-		schemelbl = new JLabel("Scheme");
+		fromDateLbl = new JLabel("From Date");
+		toDateLbl = new JLabel("To Date");
+		acToSchemeLbl = new JLabel("According To Scheme");
+		schemeLbl = new JLabel("Scheme");
 
 		accordingToScheme = new JCheckBox();
 		fromDatePicker = new JXDatePicker();
@@ -148,7 +148,7 @@ public class TransactionReportPanel extends AbstractPanel
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 1;
-		centerPanel.add(fromdatelbl, c);
+		centerPanel.add(fromDateLbl, c);
 
 		c.gridx = 1;
 		c.gridy = 0;
@@ -158,7 +158,7 @@ public class TransactionReportPanel extends AbstractPanel
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;
-		centerPanel.add(todatelbl, c);
+		centerPanel.add(toDateLbl, c);
 
 		c.gridx = 1;
 		c.gridy = 1;
@@ -168,7 +168,7 @@ public class TransactionReportPanel extends AbstractPanel
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 1;
-		centerPanel.add(accordingtoschemelbl, c);
+		centerPanel.add(acToSchemeLbl, c);
 
 		c.gridx = 1;
 		c.gridy = 2;
@@ -178,7 +178,7 @@ public class TransactionReportPanel extends AbstractPanel
 		c.gridx = 0;
 		c.gridy = 3;
 		c.gridwidth = 1;
-		centerPanel.add(schemelbl, c);
+		centerPanel.add(schemeLbl, c);
 
 		c.gridx = 1;
 		c.gridy = 3;

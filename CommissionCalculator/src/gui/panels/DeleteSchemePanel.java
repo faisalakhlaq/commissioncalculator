@@ -21,11 +21,11 @@ import database.TransactionHandler;
 public class DeleteSchemePanel extends AbstractPanel
 {
 
-	private JButton deletebtn = null;
+	private JButton deleteBtn = null;
 
-	private JButton refreshbtn = null;
+	private JButton refreshBtn = null;
 
-	private JLabel schemename = null;
+	private JLabel schemeName = null;
 
 	private JComboBox<String> schemeNameCbx = null;
 
@@ -40,8 +40,8 @@ public class DeleteSchemePanel extends AbstractPanel
 	{
 		GuiPanel buttonPanel = new GuiPanel();
 
-		deletebtn = new JButton("DELETE");
-		deletebtn.addActionListener(new ActionListener()
+		deleteBtn = new JButton("DELETE");
+		deleteBtn.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent arg0)
@@ -55,8 +55,8 @@ public class DeleteSchemePanel extends AbstractPanel
 			}
 		});
 
-		refreshbtn = new JButton("Refresh");
-		refreshbtn.addActionListener(new ActionListener()
+		refreshBtn = new JButton("Refresh");
+		refreshBtn.addActionListener(new ActionListener()
 		{
 
 			@Override
@@ -66,8 +66,8 @@ public class DeleteSchemePanel extends AbstractPanel
 			}
 		});
 
-		buttonPanel.add(deletebtn);
-		buttonPanel.add(refreshbtn);
+		buttonPanel.add(deleteBtn);
+		buttonPanel.add(refreshBtn);
 
 		return buttonPanel;
 	}
@@ -76,7 +76,7 @@ public class DeleteSchemePanel extends AbstractPanel
 	{
 		GuiPanel centerPanel = new GuiPanel();
 
-		schemename = new JLabel("Scheme Name: ");
+		schemeName = new JLabel("Scheme Name: ");
 
 		resultMsgLbl = new JLabel();
 
@@ -99,7 +99,7 @@ public class DeleteSchemePanel extends AbstractPanel
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 1;
-		centerPanel.add(schemename, c);
+		centerPanel.add(schemeName, c);
 
 		c.gridx = 1;
 		c.gridy = 0;

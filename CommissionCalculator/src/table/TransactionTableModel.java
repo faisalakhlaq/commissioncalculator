@@ -13,7 +13,7 @@ public class TransactionTableModel extends AbstractTableModel
 
 	private static final int date = 1;
 
-	private static final int Schemename = 2;
+	private static final int SchemeName = 2;
 
 	private String[] columnNames;
 
@@ -52,7 +52,7 @@ public class TransactionTableModel extends AbstractTableModel
 			return record.getAmount();
 		case date:
 			return record.getDate();
-		case Schemename:
+		case SchemeName:
 			return record.getSchemename();
 		default:
 			return new Object();
