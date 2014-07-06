@@ -9,6 +9,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
+
+import model.CompanyInformation;
+
 @SuppressWarnings("serial")
 public class MainView extends GuiFrame
 {
@@ -20,13 +24,31 @@ public class MainView extends GuiFrame
 
 	private BannerPanel bannerPanel = new BannerPanel();
 
-	public MainView()
+	private static MainView instance = null;
+
+	private MainView()
 	{
+		setWindows();
 		configurePanel();
 		setScreenLocation();
 		addToolBar();
 		addPanel();
 		addMenuBar();
+	}
+
+	public static MainView getInstance()
+	{
+		if (instance == null) instance = new MainView();
+
+		return instance;
+	}
+
+	private void setWindows()
+	{
+		CompanyInformation info = new CompanyInformation();
+		setTitle(info.getSoftwareTitle());
+		ImageIcon icon = new ImageIcon(getClass().getResource("/resources/dollars.png"));
+		if (icon != null) setIconImage(icon.getImage());
 	}
 
 	private void addToolBar()
@@ -47,72 +69,6 @@ public class MainView extends GuiFrame
 		Dimension d = new Dimension(screenWidth, screenHeight);
 		this.setMinimumSize(d);
 	}
-
-	// private void addMenuBarItems(JMenuBar menuBar)
-	// {
-	// JMenu file = new JMenu("File");
-	// menuBar.add(file);
-	//
-	// JMenu edit = new JMenu("Edit");
-	// menuBar.add(edit);
-	//
-	// JMenuItem exit = new JMenuItem("Exit");
-	// file.add(exit);
-	//
-	// JMenuItem transaction = new JMenuItem("Transaction");
-	// edit.add(transaction);
-	//
-	// transaction.addActionListener(new ActionListener()
-	// {
-	// @Override
-	// public void actionPerformed(ActionEvent arg0)
-	// {
-	// desktopPane.showPanel("TRANSACTION");
-	// }
-	// });
-	//
-	// JMenuItem createscheme = new JMenuItem("Create Scheme");
-	// edit.add(createscheme);
-	// createscheme.addActionListener(new ActionListener()
-	// {
-	// @Override
-	// public void actionPerformed(ActionEvent arg0)
-	// {
-	// desktopPane.showPanel("SCHEME");
-	// }
-	// });
-	//
-	// JMenuItem deletescheme = new JMenuItem("Delete scheme");
-	// edit.add(deletescheme);
-	// deletescheme.addActionListener(new ActionListener()
-	// {
-	// @Override
-	// public void actionPerformed(ActionEvent arg0)
-	// {
-	// desktopPane.showPanel("DELETE_SCHEME");
-	// }
-	// });
-	//
-	// JMenuItem transactionreport = new JMenuItem("Transaction Report");
-	// edit.add(transactionreport);
-	// transactionreport.addActionListener(new ActionListener()
-	// {
-	// @Override
-	// public void actionPerformed(ActionEvent arg0)
-	// {
-	// desktopPane.showPanel("TRANSACTION_REPORT");
-	// }
-	// });
-	//
-	// exit.addActionListener(new ActionListener()
-	// {
-	// @Override
-	// public void actionPerformed(ActionEvent arg0)
-	// {
-	// System.exit(0);
-	// }
-	// });
-	// }
 
 	private void addPanel()
 	{

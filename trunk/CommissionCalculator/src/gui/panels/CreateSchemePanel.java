@@ -6,6 +6,7 @@ import gui.GuiPanel;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -115,8 +116,8 @@ public class CreateSchemePanel extends AbstractPanel
 	{
 		GuiPanel centerPanel = new GuiPanel();
 
-		schemeNameLbl = new JLabel("Scheme Name: ");
-		companyNameLbl = new JLabel("Company Name: ");
+		schemeNameLbl = new JLabel("Scheme Name");
+		companyNameLbl = new JLabel("Company Name");
 		JLabel[] amountLbl = new JLabel[9];
 		amountLbl[0] = new JLabel("1-1000");
 		amountLbl[1] = new JLabel("1001-2500");
@@ -143,110 +144,67 @@ public class CreateSchemePanel extends AbstractPanel
 		centerPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 0, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(schemeNameLbl, c);
 
-		c.gridx = 1;
-		c.gridy = 0;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 0, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(schemeTxt, c);
 
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 1, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(companyNameLbl, c);
 
-		c.gridx = 1;
-		c.gridy = 1;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(companyTxt, c);
 
-		// /////////////////////////////////////////////////////////////////////////////////////////////
-		c.gridx = 0;
-		c.gridy = 3;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 3, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(amountLbl[0], c);
 
-		c.gridx = 1;
-		c.gridy = 3;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 3, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(amountTxt[0], c);
 
-		c.gridx = 0;
-		c.gridy = 4;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 4, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(amountLbl[1], c);
 
-		c.gridx = 1;
-		c.gridy = 4;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 4, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(amountTxt[1], c);
 
-		c.gridx = 0;
-		c.gridy = 5;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 5, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(amountLbl[2], c);
 
-		c.gridx = 1;
-		c.gridy = 5;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 5, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(amountTxt[2], c);
 
-		c.gridx = 0;
-		c.gridy = 6;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 6, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(amountLbl[3], c);
 
-		c.gridx = 1;
-		c.gridy = 6;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 6, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(amountTxt[3], c);
 
-		c.gridx = 0;
-		c.gridy = 7;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 7, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(amountLbl[4], c);
 
-		c.gridx = 1;
-		c.gridy = 7;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 7, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(amountTxt[4], c);
 
-		c.gridx = 0;
-		c.gridy = 8;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 8, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(amountLbl[5], c);
 
-		c.gridx = 1;
-		c.gridy = 8;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 8, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(amountTxt[5], c);
 
-		c.gridx = 0;
-		c.gridy = 9;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 9, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(amountLbl[6], c);
 
-		c.gridx = 1;
-		c.gridy = 9;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 9, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(amountTxt[6], c);
 
-		c.gridx = 0;
-		c.gridy = 10;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 10, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(amountLbl[7], c);
 
-		c.gridx = 1;
-		c.gridy = 10;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 10, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(amountTxt[7], c);
 
-		c.gridx = 1;
-		c.gridy = 11;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 11, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(resultMsgLbl, c);
 
 		return centerPanel;
@@ -305,5 +263,18 @@ public class CreateSchemePanel extends AbstractPanel
 		amountTxt[5].setText(null);
 		amountTxt[6].setText(null);
 		amountTxt[7].setText(null);
+	}
+
+	private void setGridBagConstraints(GridBagConstraints c, int gridx, int gridy, int placement, int paddingTop, int paddingLeft)
+	{
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = placement;
+		c.insets = new Insets(paddingTop, paddingLeft, 0, 0); // top and left
+																// padding
+		c.weightx = 0.75;
+		c.weighty = 0;
+		c.gridx = gridx;
+		c.gridy = gridy;
+		c.gridwidth = 1;
 	}
 }
