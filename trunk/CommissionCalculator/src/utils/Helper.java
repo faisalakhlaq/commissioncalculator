@@ -24,4 +24,9 @@ public class Helper {
 		return isEmpty;
 	}
 
+	public double objectToDouble(Object ob) {
+		double result = 0;
+		result = Double.valueOf(ob.toString().trim());
+		return result;
+	}
 }

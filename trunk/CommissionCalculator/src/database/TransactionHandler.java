@@ -61,6 +61,7 @@ public class TransactionHandler {
 								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
+
 			}
 		}
 	}
@@ -179,9 +180,11 @@ public class TransactionHandler {
 				e1.printStackTrace();
 				throw new SQLException(
 						"Error occured while closing the connection or statement.");
+			
 			}
 		}
 		return result;
+		
 	}
 
 }

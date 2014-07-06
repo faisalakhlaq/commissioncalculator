@@ -89,6 +89,7 @@ public class TransactionPanel extends AbstractPanel {
 				java.util.Date date = datePicker.getDate();
 				TransactionHandler transactionhandler = new TransactionHandler();
 				transactionhandler.saveTransaction(aName, date, sName);
+				clearTextFields();
 				displayMessage(true);
 			}
 		});
@@ -220,4 +221,9 @@ public class TransactionPanel extends AbstractPanel {
 							schemeNames));
 		}
 	}
+	private void clearTextFields()
+	{
+		amountTxt.setText(null);
+		
+}
 }
