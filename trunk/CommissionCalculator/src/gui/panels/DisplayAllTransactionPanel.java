@@ -3,11 +3,11 @@ package gui.panels;
 import gui.AbstractPanel;
 import gui.GuiPanel;
 
-import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -16,20 +16,25 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 import model.Transaction;
 import table.TransactionTableModel;
+import utils.Helper;
 
 @SuppressWarnings("serial")
 public class DisplayAllTransactionPanel extends AbstractPanel
 {
-
 	private JButton exitbtn = null;
+
+	private JLabel profitLbl = null;
+
+	private JTable table = new JTable();
 
 	private Vector<Transaction> transactionList = null;
 
 	private String[] columnNames =
-	{ "Amount ", "Date", "Scheme","Profit" };
+	{ "Amount ", "Date", "Scheme", "Profit" };
 
 	public DisplayAllTransactionPanel(Vector<Transaction> list)
 	{
@@ -61,6 +66,7 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 		c.gridwidth = 1;
 		add(buttonPanel, c);
 
+		updateProfitLabel();
 	}
 
 	public GuiPanel getButtonPanel()
@@ -86,7 +92,7 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 	public GuiPanel getCenterPanel()
 	{
 		TransactionTableModel model = new TransactionTableModel(transactionList, columnNames);
-		JTable table = new JTable(model); // NEW
+		table.setModel(model);
 		table.setTableHeader(table.getTableHeader()); // ADDED THIS
 		// Create the scroll pane and add the table to it.
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -113,14 +119,62 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 	public GuiPanel getBannerPanel()
 	{
 		GuiPanel bannerPanel = new GuiPanel();
-		bannerPanel.add(new JLabel("All Transaction"), BorderLayout.CENTER);
+		bannerPanel.setLayout(new GridBagLayout());
+
+		profitLbl = new JLabel("Total Profit = ");
+		JLabel headingLbl = new JLabel("All Transaction");
+
+		GridBagConstraints hc = new GridBagConstraints();
+
+		hc.fill = GridBagConstraints.VERTICAL;
+		hc.anchor = GridBagConstraints.CENTER;
+		hc.weightx = 0.75;
+		hc.weighty = 0;
+		hc.gridx = 0;
+		hc.gridy = 0;
+		hc.gridwidth = 1;
+		bannerPanel.add(headingLbl, hc);
+
+		hc.fill = GridBagConstraints.VERTICAL;
+		hc.anchor = GridBagConstraints.CENTER;
+		hc.insets = new Insets(5, 0, 0, 0);
+		hc.weightx = 0.75;
+		hc.weighty = 0;
+		hc.gridx = 0;
+		hc.gridy = 1;
+		hc.gridwidth = 1;
+		bannerPanel.add(profitLbl, hc);
 
 		return bannerPanel;
 	}
 
+	/**
+	 * Get the total profit by accessing the last column of the table and
+	 * calculating the sum of all the values
+	 */
+	private double getTotalProfit()
+	{
+		double total = 0;
+		TableModel model = table.getModel();
+		int cols = table.getColumnCount();
+		int rows = table.getRowCount();
+		int colNumber = cols - 1;
+
+		for (int i = 0; i < rows; i++)
+		{
+			Object value = model.getValueAt(i, colNumber);
+			total += Helper.objectToDouble(value);
+		}
+		return total;
+	}
+
+	private void updateProfitLabel()
+	{
+		profitLbl.setText(profitLbl.getText() + getTotalProfit());
+	}
+
 	public void createAndShowGUI()
 	{
-
 		this.setVisible(true);
 	}
 }

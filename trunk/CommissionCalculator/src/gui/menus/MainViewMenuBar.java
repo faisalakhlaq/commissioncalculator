@@ -1,7 +1,9 @@
 package gui.menus;
 
+import gui.dailogue.MessageDialog;
 import gui.panels.DesktopTabbedPane;
 import gui.panels.DisplayAllSchemesPanel;
+import gui.panels.EditSchemeNamePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,34 +36,37 @@ public class MainViewMenuBar extends JMenuBar
 
 	private void addMenuBarItems()
 	{
+		addFileMenu();
+		addTransactionMenu();
+		addSchemeMenu();
+	}
+
+	private void addFileMenu()
+	{
 		JMenu file = new JMenu("File");
 		this.add(file);
-
-		JMenu edit = new JMenu("Edit");
-		this.add(edit);
-
-		JMenu scheme = new JMenu("Scheme");
-		this.add(scheme);
 
 		JMenuItem exit = new JMenuItem("Exit");
 		file.add(exit);
 
-		JMenuItem transaction = new JMenuItem("Transaction");
-		edit.add(transaction);
-
-		transaction.addActionListener(new ActionListener()
+		exit.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-				desktopPane.showPanel("TRANSACTION");
+				System.exit(0);
 			}
 		});
+	}
 
-		JMenuItem createscheme = new JMenuItem("Create Scheme");
-		edit.add(createscheme);
-		createscheme.addActionListener(new ActionListener()
+	private void addSchemeMenu()
+	{
+		JMenu scheme = new JMenu("Scheme");
+		this.add(scheme);
+
+		JMenuItem createScheme = new JMenuItem("Create Scheme");
+		scheme.add(createScheme);
+		createScheme.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent arg0)
@@ -71,8 +76,21 @@ public class MainViewMenuBar extends JMenuBar
 			}
 		});
 
-		JMenuItem deletescheme = new JMenuItem("Delete scheme");
-		edit.add(deletescheme);
+		JMenuItem editScheme = new JMenuItem("Edit Scheme Name");
+		scheme.add(editScheme);
+		editScheme.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
+				EditSchemeNamePanel p = new EditSchemeNamePanel();
+				desktopPane.addPanel("Edit Scheme Name", p);
+			}
+		});
+
+		JMenuItem deletescheme = new JMenuItem("Delete Scheme");
+		scheme.add(deletescheme);
 		deletescheme.addActionListener(new ActionListener()
 		{
 			@Override
@@ -83,17 +101,6 @@ public class MainViewMenuBar extends JMenuBar
 			}
 		});
 
-		JMenuItem transactionReport = new JMenuItem("Transaction Report");
-		edit.add(transactionReport);
-		transactionReport.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-				desktopPane.showPanel("TRANSACTION_REPORT");
-			}
-		});
 		JMenuItem schemes = new JMenuItem("Display All Schemes");
 		scheme.add(schemes);
 		schemes.addActionListener(new ActionListener()
@@ -114,18 +121,39 @@ public class MainViewMenuBar extends JMenuBar
 				}
 				catch (Exception e)
 				{
-					// TODO display error message
-					e.printStackTrace();
+					new MessageDialog("Error", e.getMessage());
 				}
 			}
 		});
+	}
 
-		exit.addActionListener(new ActionListener()
+	private void addTransactionMenu()
+	{
+		JMenu transactionMenu = new JMenu("Transactions");
+		this.add(transactionMenu);
+
+		JMenuItem transaction = new JMenuItem("Perform Transaction");
+		transactionMenu.add(transaction);
+
+		transaction.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				System.exit(0);
+				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
+				desktopPane.showPanel("TRANSACTION");
+			}
+		});
+
+		JMenuItem transactionReport = new JMenuItem("Transaction Report");
+		transactionMenu.add(transactionReport);
+		transactionReport.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
+				desktopPane.showPanel("TRANSACTION_REPORT");
 			}
 		});
 	}

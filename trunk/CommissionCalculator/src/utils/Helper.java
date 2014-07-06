@@ -31,6 +31,20 @@ public class Helper
 		return isEmpty;
 	}
 
+	public static int stringToInt(String str) throws Exception
+	{
+		int result = 0;
+		if (isDigit(str))
+		{
+			result = Integer.parseInt(str.trim());
+		}
+		else
+		{
+			throw new Exception("Number value cannot be a string");
+		}
+		return result;
+	}
+
 	/**
 	 * Get a double value from the object
 	 * 
