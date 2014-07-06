@@ -9,8 +9,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -18,39 +16,73 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import org.jdesktop.swingx.JXDatePicker;
-
-import utils.Helper;
-
 import database.SchemeHandler;
-import database.TransactionHandler;
 
 @SuppressWarnings("serial")
-public class TransactionPanel extends AbstractPanel
+public class EditSchemeNamePanel extends AbstractPanel
 {
 	private JButton saveBtn = null;
 
 	private JButton refreshtBtn = null;
 
-	private JLabel amountLbl = null;
+	private JLabel schemeNameLbl = null;
 
-	private JLabel datLbl = null;
+	private JLabel newNameLbl = null;
 
-	private JLabel schemeLbl = null;
-
-	private JTextField amountTxt = null;
+	private JTextField newNameTxt = null;
 
 	private JComboBox<String> schemeNamecbx = null;
 
-	private JXDatePicker datePicker = null;
-
 	private JLabel resultMsgLbl;
 
-	public TransactionPanel()
+	public EditSchemeNamePanel()
 	{
 		addPanels();
 	}
 
+	@Override
+	public GuiPanel getCenterPanel()
+	{
+		GuiPanel centerPanel = new GuiPanel();
+		centerPanel.setLayout(new GridBagLayout());
+
+		schemeNameLbl = new JLabel("Scheme Name");
+		newNameLbl = new JLabel("New Name");
+		newNameTxt = new JTextField(15);
+		resultMsgLbl = new JLabel();
+
+		populateSchemeNamesCbx();
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		centerPanel.add(schemeNameLbl, c);
+
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		centerPanel.add(schemeNamecbx, c);
+
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		centerPanel.add(newNameLbl, c);
+
+		c.gridx = 1;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		centerPanel.add(newNameTxt, c);
+
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 2;
+		centerPanel.add(resultMsgLbl, c);
+
+		return centerPanel;
+	}
+
+	@Override
 	public GuiPanel getButtonPanel()
 	{
 		GuiPanel buttonPanel = new GuiPanel();
@@ -61,15 +93,15 @@ public class TransactionPanel extends AbstractPanel
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
+				String newName = newNameTxt.getText();
+				String oldName = schemeNamecbx.getSelectedItem().toString();
+
+				SchemeHandler handler = new SchemeHandler();
 				try
 				{
-					int amount = Helper.stringToInt(amountTxt.getText());
-					String sName = schemeNamecbx.getSelectedItem().toString();
-
-					java.util.Date date = datePicker.getDate();
-					TransactionHandler transactionhandler = new TransactionHandler();
-					transactionhandler.saveTransaction(amount, date, sName);
+					handler.updateSchemeName(oldName, newName);
 					clearTextFields();
+					populateSchemeNamesCbx();
 					displayMessage(true);
 				}
 				catch (Exception e)
@@ -94,73 +126,13 @@ public class TransactionPanel extends AbstractPanel
 		return buttonPanel;
 	}
 
-	public GuiPanel getCenterPanel()
-	{
-		GuiPanel centerPanel = new GuiPanel();
-
-		amountLbl = new JLabel("Amount");
-		datLbl = new JLabel("Date");
-		schemeLbl = new JLabel("Scheme");
-		resultMsgLbl = new JLabel();
-
-		amountTxt = new JTextField(15);
-		datePicker = new JXDatePicker();
-		datePicker.setDate(Calendar.getInstance().getTime());
-		datePicker.setFormats(new SimpleDateFormat("yyyy.MM.dd"));
-
-		populateSchemeNamesCbx();
-		centerPanel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 1;
-		centerPanel.add(amountLbl, c);
-
-		c.gridx = 1;
-		c.gridy = 0;
-		c.gridwidth = 1;
-		centerPanel.add(amountTxt, c);
-
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 1;
-		centerPanel.add(datLbl, c);
-
-		c.gridx = 1;
-		c.gridy = 1;
-		c.gridwidth = 1;
-		centerPanel.add(datePicker, c);
-
-		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 1;
-		centerPanel.add(schemeLbl, c);
-
-		c.gridx = 1;
-		c.gridy = 2;
-		c.gridwidth = 1;
-		centerPanel.add(schemeNamecbx, c);
-
-		c.gridx = 0;
-		c.gridy = 3;
-		c.gridwidth = 2;
-		centerPanel.add(resultMsgLbl, c);
-
-		return centerPanel;
-	}
-
+	@Override
 	public GuiPanel getBannerPanel()
 	{
 		GuiPanel bannerPanel = new GuiPanel();
-		bannerPanel.add(new JLabel("Transaction"), BorderLayout.CENTER);
+		bannerPanel.add(new JLabel("Edit Scheme Name"), BorderLayout.CENTER);
 
 		return bannerPanel;
-	}
-
-	public void createAndShowGUI()
-	{
-
 	}
 
 	private void displayMessage(final boolean success)
@@ -173,11 +145,11 @@ public class TransactionPanel extends AbstractPanel
 				{
 					if (success)
 					{
-						resultMsgLbl.setText("Transaction saved");
+						resultMsgLbl.setText("Scheme Name changed successfully");
 					}
 					else
 					{
-						resultMsgLbl.setText("Sorry! Transaction unsuccessfull");
+						resultMsgLbl.setText("Sorry! Unsuccessfull");
 					}
 					Thread.sleep(2000);
 					resultMsgLbl.setText(null);
@@ -220,6 +192,7 @@ public class TransactionPanel extends AbstractPanel
 
 	private void clearTextFields()
 	{
-		amountTxt.setText(null);
+		newNameTxt.setText(null);
 	}
+
 }

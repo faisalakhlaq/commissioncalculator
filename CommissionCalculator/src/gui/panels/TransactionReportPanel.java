@@ -2,6 +2,7 @@ package gui.panels;
 
 import gui.AbstractPanel;
 import gui.GuiPanel;
+import gui.dailogue.MessageDialog;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -133,16 +134,18 @@ public class TransactionReportPanel extends AbstractPanel
 
 		schemeNamecbx = new JComboBox<String>();
 		populateSchemeNamesCbx();
-//		SchemeHandler handler = new SchemeHandler();
-//		Vector<String> schemeNames = handler.getSchemeNames();
-//		if (schemeNames == null)
-//		{
-//			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>());
-//		}
-//		else
-//		{
-//			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>(schemeNames));
-//		}
+		// SchemeHandler handler = new SchemeHandler();
+		// Vector<String> schemeNames = handler.getSchemeNames();
+		// if (schemeNames == null)
+		// {
+		// schemeNamecbx.setModel(new
+		// javax.swing.DefaultComboBoxModel<String>());
+		// }
+		// else
+		// {
+		// schemeNamecbx.setModel(new
+		// javax.swing.DefaultComboBoxModel<String>(schemeNames));
+		// }
 
 		centerPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -205,7 +208,15 @@ public class TransactionReportPanel extends AbstractPanel
 			schemeNamecbx = new JComboBox<String>();
 		}
 		SchemeHandler handler = new SchemeHandler();
-		Vector<String> schemeNames = handler.getSchemeNames();
+		Vector<String> schemeNames = null;
+		try
+		{
+			schemeNames = handler.getSchemeNames();
+		}
+		catch (Exception e)
+		{
+			new MessageDialog("Error", e.getMessage());
+		}
 		if (schemeNames == null)
 		{
 			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>());

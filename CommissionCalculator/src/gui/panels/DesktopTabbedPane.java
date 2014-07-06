@@ -55,19 +55,11 @@ public class DesktopTabbedPane extends JTabbedPane
 		{
 			this.setSelectedIndex(TRANSACTION_REPORT);
 		}
-		// else if ("DISPLAYALL_TRANSACTION".equals(panelName))
-		// {
-		// this.setSelectedIndex(DISPLAY_ALL_TRANSACTION);
-		// }
-		// else if ("SCHEMES".equals(panelName))
-		// {
-		// this.setSelectedIndex(SCHEMES);
-		// }
 	}
 
-	public void addPanel(String panelTitle, GuiPanel trPnl)
+	public void addPanel(String panelTitle, GuiPanel panel)
 	{
-		this.add(trPnl, panelTitle);
-		this.setSelectedComponent(trPnl);
+		this.add(panel, panelTitle);
+		this.setSelectedComponent(panel);
 	}
 }
