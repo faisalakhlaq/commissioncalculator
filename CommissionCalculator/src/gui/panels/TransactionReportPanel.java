@@ -23,6 +23,11 @@ import model.Transaction;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import table.SchemeTableModel;
+import table.SchemeTableModelListener;
+import table.TransactionTableModel;
+import table.TransactionTableModelListener;
+
 import database.SchemeHandler;
 import database.TransactionHandler;
 
@@ -117,6 +122,7 @@ public class TransactionReportPanel extends AbstractPanel
 	public GuiPanel getCenterPanel()
 	{
 		GuiPanel centerPanel = new GuiPanel();
+		
 
 		fromDateLbl = new JLabel("From Date");
 		toDateLbl = new JLabel("To Date");

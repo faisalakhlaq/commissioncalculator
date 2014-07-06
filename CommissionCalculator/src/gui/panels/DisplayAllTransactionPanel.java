@@ -20,6 +20,7 @@ import javax.swing.table.TableModel;
 
 import model.Transaction;
 import table.TransactionTableModel;
+import table.TransactionTableModelListener;
 import utils.Helper;
 
 @SuppressWarnings("serial")
@@ -92,6 +93,7 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 	public GuiPanel getCenterPanel()
 	{
 		TransactionTableModel model = new TransactionTableModel(transactionList, columnNames);
+		model.addTableModelListener(new TransactionTableModelListener());
 		table.setModel(model);
 		table.setTableHeader(table.getTableHeader()); // ADDED THIS
 		// Create the scroll pane and add the table to it.
