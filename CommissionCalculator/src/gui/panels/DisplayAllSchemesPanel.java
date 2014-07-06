@@ -19,9 +19,10 @@ import javax.swing.JTable;
 
 import model.Scheme;
 import table.SchemeTableModel;
+import table.SchemeTableModelListener;
 
 @SuppressWarnings("serial")
-public class SchemeInformatioPanel extends AbstractPanel
+public class DisplayAllSchemesPanel extends AbstractPanel
 {
 	private JButton exitBtn = null;
 
@@ -30,7 +31,7 @@ public class SchemeInformatioPanel extends AbstractPanel
 	private String[] columnNames =
 	{ "Scheme Name ", "Company Name", "1-1000", "1001-2500", "2501-4000", "4001-6000", "6001-8000", "8001-10000", "10001-13000", "13001-15000" };
 
-	public SchemeInformatioPanel(Vector<Scheme> schemeList)
+	public DisplayAllSchemesPanel(Vector<Scheme> schemeList)
 	{
 		this.schemeList = schemeList;
 		addPanels();
@@ -67,10 +68,12 @@ public class SchemeInformatioPanel extends AbstractPanel
 		GuiPanel buttonPanel = new GuiPanel();
 
 		exitBtn = new JButton("Exit");
-		exitBtn.addActionListener(new ActionListener() {
-			
+		exitBtn.addActionListener(new ActionListener()
+		{
+
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				// TODO Auto-generated method stub
 				DesktopTabbedPane desktop = DesktopTabbedPane.getInstance();
 				desktop.removeTabAt(desktop.getSelectedIndex());
@@ -83,14 +86,16 @@ public class SchemeInformatioPanel extends AbstractPanel
 	public GuiPanel getCenterPanel()
 	{
 		SchemeTableModel model = new SchemeTableModel(schemeList, columnNames);
+		model.addTableModelListener(new SchemeTableModelListener());
 		JTable table = new JTable(model); // NEW
 		table.setTableHeader(table.getTableHeader()); // ADDED THIS
+		table.getTableHeader().setReorderingAllowed(false);
 
 		// Create the scroll pane and add the table to it.
 		JScrollPane scrollPane = new JScrollPane(table);
 
 		scrollPane.setMinimumSize(new Dimension(500, 200));
-//		scrollPane.setPreferredSize(new Dimension(500, 200));
+		// scrollPane.setPreferredSize(new Dimension(500, 200));
 
 		GuiPanel p = new GuiPanel();
 		p.setLayout(new GridBagLayout());

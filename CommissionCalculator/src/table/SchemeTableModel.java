@@ -1,18 +1,21 @@
 package table;
 
+import gui.dailogue.MessageDialog;
+
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
 import model.Scheme;
+import utils.Helper;
 
 @SuppressWarnings("serial")
 public class SchemeTableModel extends AbstractTableModel
 {
 	private static final int SCHEME_NAME = 0;
-	
+
 	private static final int COMPANY_NAME = 1;
-	
+
 	private static final int ONE = 2;
 
 	private static final int TWO = 3;
@@ -39,6 +42,13 @@ public class SchemeTableModel extends AbstractTableModel
 		data = new Vector<Scheme>(SchemeVector);
 	}
 
+	public boolean isCellEditable(int row, int col)
+	{
+		if (col == 0) return false;
+
+		return true;
+	}
+
 	public String getColumnName(int column)
 	{
 		return columnNames[column];
@@ -56,16 +66,97 @@ public class SchemeTableModel extends AbstractTableModel
 		return data.size();
 	}
 
+	public Scheme getScheme(int row)
+	{
+		return data.get(row);
+	}
+
+	public void setValueAt(Object value, int row, int col)
+	{
+		Scheme record = data.get(row);
+		try
+		{
+			switch (col)
+			{
+			case SCHEME_NAME:
+			{
+				// Do nothing as the first column is not editable
+				// record.setSchemeName((String) value);
+				// fireTableCellUpdated(row, col);
+				break;
+			}
+			case COMPANY_NAME:
+			{
+				record.setCompanyName((String) value);
+				fireTableCellUpdated(row, col);
+				break;
+			}
+			case ONE:
+			{
+				record.setOne(Helper.objectToDouble(value));
+				fireTableCellUpdated(row, col);
+				break;
+			}
+			case TWO:
+			{
+				record.setTwo(Helper.objectToDouble(value));
+				fireTableCellUpdated(row, col);
+				break;
+			}
+			case THREE:
+			{
+				record.setThree(Helper.objectToDouble(value));
+				fireTableCellUpdated(row, col);
+				break;
+			}
+			case FOUR:
+			{
+				record.setFour(Helper.objectToDouble(value));
+				fireTableCellUpdated(row, col);
+				break;
+			}
+			case FIVE:
+			{
+				record.setFive(Helper.objectToDouble(value));
+				fireTableCellUpdated(row, col);
+				break;
+			}
+			case SIX:
+			{
+				record.setSix(Helper.objectToDouble(value));
+				fireTableCellUpdated(row, col);
+				break;
+			}
+			case SEVEN:
+			{
+				record.setSeven(Helper.objectToDouble(value));
+				fireTableCellUpdated(row, col);
+				break;
+			}
+			case EIGHT:
+			{
+				record.setEight(Helper.objectToDouble(value));
+				fireTableCellUpdated(row, col);
+				break;
+			}
+			}
+		}
+		catch (Exception e)
+		{
+			new MessageDialog("Error", e.getMessage());
+		}
+	}
+
 	@Override
 	public Object getValueAt(int row, int column)
 	{
 		Scheme record = (Scheme) data.get(row);
 		switch (column)
 		{
-		case COMPANY_NAME:
-			return record.getCompanyName();
 		case SCHEME_NAME:
 			return record.getSchemeName();
+		case COMPANY_NAME:
+			return record.getCompanyName();
 		case ONE:
 			return record.getOne();
 		case TWO:

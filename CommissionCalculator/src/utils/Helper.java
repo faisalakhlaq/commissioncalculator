@@ -1,10 +1,13 @@
 package utils;
 
-public class Helper {
-	public Helper() {
+public class Helper
+{
+	public Helper()
+	{
 	}
 
-	public static boolean isDigit(String data) {
+	public static boolean isDigit(String data)
+	{
 		boolean isDigit = false;
 		String regex = "\\d+";
 		isDigit = data.matches(regex);
@@ -14,17 +17,29 @@ public class Helper {
 	/**
 	 * Check if the provided string is empty or null
 	 */
-	public static boolean isEmpty(String str) {
+	public static boolean isEmpty(String str)
+	{
 		boolean isEmpty = false;
-		if (str == null) {
+		if (str == null)
+		{
 			isEmpty = true;
-		} else if (str.trim().isEmpty()) {
+		}
+		else if (str.trim().isEmpty())
+		{
 			isEmpty = true;
 		}
 		return isEmpty;
 	}
 
-	public double objectToDouble(Object ob) {
+	/**
+	 * Get a double value from the object
+	 * 
+	 * @exception If
+	 *                the object is not containing double value then
+	 *                {@link NumberFormatException} is thrown
+	 */
+	public static double objectToDouble(Object ob) throws NumberFormatException
+	{
 		double result = 0;
 		result = Double.valueOf(ob.toString().trim());
 		return result;

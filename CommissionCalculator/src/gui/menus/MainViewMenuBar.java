@@ -1,7 +1,7 @@
 package gui.menus;
 
 import gui.panels.DesktopTabbedPane;
-import gui.panels.SchemeInformatioPanel;
+import gui.panels.DisplayAllSchemesPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -108,7 +108,7 @@ public class MainViewMenuBar extends JMenuBar
 					Vector<Scheme> schemeList = handler.getAllSchemes();
 					if (schemeList != null && schemeList.size() > 0)
 					{
-						SchemeInformatioPanel p = new SchemeInformatioPanel(schemeList);
+						DisplayAllSchemesPanel p = new DisplayAllSchemesPanel(schemeList);
 						desktopPane.addPanel("Schemes", p);
 					}
 				}
