@@ -2,13 +2,15 @@ package model;
 
 import java.sql.Date;
 
-public class Transaction
+public class Transaction implements ModelObject
 {
+	private int id;
+
 	private double amount;
 
 	private Date date;
 
-	private String schemename;
+	private String schemeName;
 
 	public Transaction()
 	{
@@ -18,7 +20,17 @@ public class Transaction
 	{
 		this.amount = amount;
 		this.date = date;
-		this.schemename = scheme;
+		this.schemeName = scheme;
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 
 	public double getAmount()
@@ -43,11 +55,11 @@ public class Transaction
 
 	public String getSchemeName()
 	{
-		return schemename;
+		return schemeName;
 	}
 
-	public void setSchemename(String schemename)
+	public void setSchemeName(String schemename)
 	{
-		this.schemename = schemename;
+		this.schemeName = schemename;
 	}
 }

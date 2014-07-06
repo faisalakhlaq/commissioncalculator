@@ -23,11 +23,6 @@ import model.Transaction;
 
 import org.jdesktop.swingx.JXDatePicker;
 
-import table.SchemeTableModel;
-import table.SchemeTableModelListener;
-import table.TransactionTableModel;
-import table.TransactionTableModelListener;
-
 import database.SchemeHandler;
 import database.TransactionHandler;
 

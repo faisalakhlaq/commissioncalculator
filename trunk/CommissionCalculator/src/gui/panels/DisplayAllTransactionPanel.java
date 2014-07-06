@@ -35,7 +35,7 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 	private Vector<Transaction> transactionList = null;
 
 	private String[] columnNames =
-	{ "Amount ", "Date", "Scheme", "Profit" };
+	{ "ID", "Amount ", "Date", "Scheme", "Profit" };
 
 	public DisplayAllTransactionPanel(Vector<Transaction> list)
 	{
