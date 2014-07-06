@@ -23,7 +23,9 @@ public class EditSchemeNamePanel extends AbstractPanel
 {
 	private JButton saveBtn = null;
 
-	private JButton refreshtBtn = null;
+	private JButton refreshBtn = null;
+
+	private JButton exitBtn = null;
 
 	private JLabel schemeNameLbl = null;
 
@@ -110,8 +112,8 @@ public class EditSchemeNamePanel extends AbstractPanel
 				}
 			}
 		});
-		refreshtBtn = new JButton("Refresh");
-		refreshtBtn.addActionListener(new ActionListener()
+		refreshBtn = new JButton("Refresh");
+		refreshBtn.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent arg0)
@@ -119,9 +121,20 @@ public class EditSchemeNamePanel extends AbstractPanel
 				populateSchemeNamesCbx();
 			}
 		});
+		exitBtn = new JButton("Exit");
+		exitBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				DesktopTabbedPane pane = DesktopTabbedPane.getInstance();
+				pane.remove(EditSchemeNamePanel.this);
+			}
+		});
 
 		buttonPanel.add(saveBtn);
-		buttonPanel.add(refreshtBtn);
+		buttonPanel.add(refreshBtn);
+		buttonPanel.add(exitBtn);
 
 		return buttonPanel;
 	}

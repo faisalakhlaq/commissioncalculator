@@ -4,20 +4,16 @@ import gui.MainView;
 
 import javax.swing.SwingUtilities;
 
-public class Driver
+public class CommissionCalculator
 {
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
+	public void startGUI()
 	{
 		SwingUtilities.invokeLater(new Runnable()
 		{
-			@Override
 			public void run()
 			{
-				MainView view = new MainView();
-				view.createAndDisplayGui();
+				MainView frame = MainView.getInstance();
+				frame.setVisible(true);
 			}
 		});
 	}
