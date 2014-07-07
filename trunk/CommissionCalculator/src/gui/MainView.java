@@ -64,7 +64,7 @@ public class MainView extends GuiFrame
 	private void configurePanel()
 	{
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int screenHeight = (int) (screenSize.getHeight() / 1.5);
+		int screenHeight = (int) (screenSize.getHeight() / 1.3);
 		int screenWidth = (int) screenSize.getWidth() / 2;
 		Dimension d = new Dimension(screenWidth, screenHeight);
 		this.setMinimumSize(d);

@@ -7,6 +7,7 @@ import gui.dailogue.MessageDialog;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -151,47 +152,85 @@ public class TransactionReportPanel extends AbstractPanel
 		centerPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 1;
+//		c.gridx = 0;
+//		c.gridy = 0;
+//		c.gridwidth = 1;
+//		centerPanel.add(fromDateLbl, c);
+//
+//		c.gridx = 1;
+//		c.gridy = 0;
+//		c.gridwidth = 1;
+//		centerPanel.add(fromDatePicker, c);
+//
+//		c.gridx = 0;
+//		c.gridy = 1;
+//		c.gridwidth = 1;
+//		centerPanel.add(toDateLbl, c);
+//
+//		c.gridx = 1;
+//		c.gridy = 1;
+//		c.gridwidth = 1;
+//		centerPanel.add(toDatePicker, c);
+//
+//		c.gridx = 0;
+//		c.gridy = 2;
+//		c.gridwidth = 1;
+//		centerPanel.add(acToSchemeLbl, c);
+//
+//		c.gridx = 1;
+//		c.gridy = 2;
+//		c.gridwidth = 1;
+//		centerPanel.add(accordingToScheme, c);
+//
+//		c.gridx = 0;
+//		c.gridy = 3;
+//		c.gridwidth = 1;
+//		centerPanel.add(schemeLbl, c);
+//
+//		c.gridx = 1;
+//		c.gridy = 3;
+//		c.gridwidth = 1;
+//		centerPanel.add(schemeNamecbx, c);
+		
+
+		setGridBagConstraints(c, 0, 0, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(fromDateLbl, c);
 
-		c.gridx = 1;
-		c.gridy = 0;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 0, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(fromDatePicker, c);
 
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 1, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(toDateLbl, c);
 
-		c.gridx = 1;
-		c.gridy = 1;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(toDatePicker, c);
 
-		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 3, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(acToSchemeLbl, c);
 
-		c.gridx = 1;
-		c.gridy = 2;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 3, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(accordingToScheme, c);
 
-		c.gridx = 0;
-		c.gridy = 3;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 4, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(schemeLbl, c);
 
-		c.gridx = 1;
-		c.gridy = 3;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 4, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(schemeNamecbx, c);
-
+		
+		
 		return centerPanel;
+	}
+	private void setGridBagConstraints(GridBagConstraints c, int gridx, int gridy, int placement, int paddingTop, int paddingLeft)
+	{
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = placement;
+		c.insets = new Insets(paddingTop, paddingLeft, 0, 0); // top and left
+																// padding
+		c.weightx = 0.75;
+		c.weighty = 0;
+		c.gridx = gridx;
+		c.gridy = gridy;
+		c.gridwidth = 1;
 	}
 
 	public GuiPanel getBannerPanel()
@@ -232,4 +271,5 @@ public class TransactionReportPanel extends AbstractPanel
 	{
 		setVisible(true);
 	}
+	
 }
