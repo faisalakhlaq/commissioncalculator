@@ -33,13 +33,21 @@ public class TransactionPanel extends AbstractPanel
 
 	private JButton refreshtBtn = null;
 
-	private JLabel amountLbl = null;
+	private JLabel rAmountLbl = null;
+	
+	private JLabel dAmountLbl = null;
+	
+	private JLabel feeLbl = null;
 
 	private JLabel datLbl = null;
 
 	private JLabel schemeLbl = null;
 
-	private JTextField amountTxt = null;
+	private JTextField rAmountTxt = null;
+	
+	private JTextField dAmountTxt = null;
+	
+	private JTextField feeTxt = null;
 
 	private JComboBox<String> schemeNamecbx = null;
 
@@ -64,12 +72,14 @@ public class TransactionPanel extends AbstractPanel
 			{
 				try
 				{
-					int amount = Helper.stringToInt(amountTxt.getText());
+					double receivedamount = Helper.stringToInt(rAmountTxt.getText());
+					double deliveredamount = Helper.stringToInt(dAmountTxt.getText());
+					double fee = Helper.stringToInt(feeTxt.getText());
 					String sName = schemeNamecbx.getSelectedItem().toString();
 
 					java.util.Date date = datePicker.getDate();
 					TransactionHandler transactionhandler = new TransactionHandler();
-					transactionhandler.saveTransaction(amount, date, sName);
+					transactionhandler.saveTransaction(receivedamount,deliveredamount,fee, date, sName);
 					clearTextFields();
 					displayMessage(true);
 				}
@@ -99,12 +109,16 @@ public class TransactionPanel extends AbstractPanel
 	{
 		GuiPanel centerPanel = new GuiPanel();
 
-		amountLbl = new JLabel("Amount");
+		rAmountLbl = new JLabel("Received Amount");
+		dAmountLbl = new JLabel("Delivered Amount");
+		feeLbl = new JLabel("Fee");
 		datLbl = new JLabel("Date");
 		schemeLbl = new JLabel("Scheme");
 		resultMsgLbl = new JLabel();
 
-		amountTxt = new JTextField(15);
+		rAmountTxt = new JTextField(15);
+		dAmountTxt = new JTextField(15);
+		feeTxt = new JTextField(15);
 		datePicker = new JXDatePicker();
 		datePicker.setDate(Calendar.getInstance().getTime());
 		datePicker.setFormats(new SimpleDateFormat("yyyy.MM.dd"));
@@ -114,27 +128,43 @@ public class TransactionPanel extends AbstractPanel
 		GridBagConstraints c = new GridBagConstraints();
 
 		setGridBagConstraints(c, 0, 0, GridBagConstraints.LINE_START, 10, 0);
-		centerPanel.add(amountLbl, c);
+		centerPanel.add(rAmountLbl, c);
 
 		setGridBagConstraints(c, 1, 0, GridBagConstraints.LINE_END, 10, 10);
-		centerPanel.add(amountTxt, c);
+		centerPanel.add(rAmountTxt, c);
 
 		setGridBagConstraints(c, 0, 1, GridBagConstraints.LINE_START, 10, 0);
-		centerPanel.add(datLbl, c);
+		centerPanel.add(dAmountLbl, c);
 
 		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
-		centerPanel.add(datePicker, c);
+		centerPanel.add(dAmountTxt, c);
 
 		setGridBagConstraints(c, 0, 2, GridBagConstraints.LINE_START, 10, 0);
-		centerPanel.add(schemeLbl, c);
+		centerPanel.add(feeLbl, c);
 
 		setGridBagConstraints(c, 1, 2, GridBagConstraints.LINE_END, 10, 10);
-		centerPanel.add(schemeNamecbx, c);
+		centerPanel.add(feeTxt, c);
 
 		setGridBagConstraints(c, 0, 3, GridBagConstraints.LINE_START, 10, 0);
 		c.gridwidth = 2;
-		centerPanel.add(resultMsgLbl, c);
+		centerPanel.add(datLbl, c);
+		
+		setGridBagConstraints(c, 1, 3, GridBagConstraints.LINE_START, 10, 0);
+		c.gridwidth = 2;
+		centerPanel.add(datePicker, c);
 
+		setGridBagConstraints(c, 0, 4, GridBagConstraints.LINE_START, 10, 0);
+		c.gridwidth = 2;
+		centerPanel.add(schemeLbl, c);
+		
+		setGridBagConstraints(c, 1, 4, GridBagConstraints.LINE_START, 10, 0);
+		c.gridwidth = 2;
+		centerPanel.add(schemeNamecbx, c);
+		
+		setGridBagConstraints(c, 0, 5, GridBagConstraints.LINE_START, 10, 0);
+		c.gridwidth = 2;
+		centerPanel.add(resultMsgLbl, c);
+		
 		return centerPanel;
 	}
 
@@ -208,7 +238,9 @@ public class TransactionPanel extends AbstractPanel
 
 	private void clearTextFields()
 	{
-		amountTxt.setText(null);
+		rAmountTxt.setText(null);
+		dAmountTxt.setText(null);
+		feeTxt.setText(null);
 	}
 
 	private void setGridBagConstraints(GridBagConstraints c, int gridx, int gridy, int placement, int paddingTop, int paddingLeft)
