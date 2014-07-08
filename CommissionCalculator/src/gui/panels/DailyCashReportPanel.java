@@ -2,6 +2,7 @@ package gui.panels;
 
 import gui.AbstractPanel;
 import gui.GuiPanel;
+import gui.dailogue.MessageDialog;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,9 +19,11 @@ import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import database.CashHandler;
+import database.TransactionHandler;
+
 @SuppressWarnings("serial")
-public class DailyCashReportPanel extends AbstractPanel
-{
+public class DailyCashReportPanel extends AbstractPanel {
 	private JTextField cashTxt = null;
 
 	private JXDatePicker datePkr = null;
@@ -34,14 +38,13 @@ public class DailyCashReportPanel extends AbstractPanel
 
 	private JButton exitBtn = null;
 
-	public DailyCashReportPanel()
-	{
+	public DailyCashReportPanel() {
 		addPanels();
+		retrieveData();
 	}
 
 	@Override
-	public GuiPanel getCenterPanel()
-	{
+	public GuiPanel getCenterPanel() {
 		GuiPanel centerPanel = new GuiPanel();
 
 		JLabel cashLbl = new JLabel("Total Cash");
@@ -103,16 +106,13 @@ public class DailyCashReportPanel extends AbstractPanel
 	}
 
 	@Override
-	public GuiPanel getButtonPanel()
-	{
+	public GuiPanel getButtonPanel() {
 		GuiPanel buttonPanel = new GuiPanel();
 
 		exitBtn = new JButton("Exit");
-		exitBtn.addActionListener(new ActionListener()
-		{
+		exitBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				DesktopTabbedPane desktop = DesktopTabbedPane.getInstance();
 				desktop.remove(DailyCashReportPanel.this);
 			}
@@ -124,16 +124,15 @@ public class DailyCashReportPanel extends AbstractPanel
 	}
 
 	@Override
-	public GuiPanel getBannerPanel()
-	{
+	public GuiPanel getBannerPanel() {
 		GuiPanel p = new GuiPanel();
 
 		p.add(new JLabel("Daily Cash Report"));
 		return p;
 	}
 
-	private void setGridBagConstraints(GridBagConstraints c, int gridx, int gridy, int placement, int paddingTop, int paddingLeft)
-	{
+	private void setGridBagConstraints(GridBagConstraints c, int gridx,
+			int gridy, int placement, int paddingTop, int paddingLeft) {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = placement;
 		c.insets = new Insets(paddingTop, paddingLeft, 0, 0); // top and left
@@ -143,5 +142,41 @@ public class DailyCashReportPanel extends AbstractPanel
 		c.gridx = gridx;
 		c.gridy = gridy;
 		c.gridwidth = 1;
+	}
+
+	/**
+	 * Retrieve the data from the database about the total cash, cash in hand,
+	 * received and delivered amount
+	 * <p>
+	 * Populate the text fields with the appropriate results
+	 */
+	private void retrieveData() {
+		CashHandler ch = new CashHandler();
+		TransactionHandler handler = new TransactionHandler();
+		try {
+			Date d = datePkr.getDate();
+			// get todays total cash
+			double cash = ch.retrieveCash(d);
+			cashTxt.setText(String.valueOf(cash));
+			// get todays total received amount
+			double rAmount = handler.getTotalReceivedAmount(d);
+			receivedAmountTxt.setText(String.valueOf(rAmount));
+
+			// get todays total delivered amount
+			double dAmount = handler.getTotalDeliveredAmount(d);
+			deliveredAmountTxt.setText(String.valueOf(dAmount));
+
+			// get total fee
+			double fee = handler.getTotalFee(d);
+			feeTxt.setText(String.valueOf(fee));
+
+			double cashInHand = cash + rAmount + fee - dAmount;
+
+			cashInHandTxt.setText(String.valueOf(cashInHand));
+		} catch (Exception e) {
+			new MessageDialog("Error",
+					"Error occured while calculating the cash: "
+							+ e.getMessage());
+		}
 	}
 }

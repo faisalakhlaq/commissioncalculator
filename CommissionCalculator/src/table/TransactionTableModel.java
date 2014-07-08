@@ -136,32 +136,25 @@ public class TransactionTableModel extends AbstractTableModel {
 			if (amount >= 1 && amount <= 1000) {
 				SchemeHandler handler = new SchemeHandler();
 				profit = handler.getProfit("1_1000", schemeName);
-			}
-			if (amount >= 1001 && amount <= 2500) {
+			} else if (amount >= 1001 && amount <= 2500) {
 				SchemeHandler handler = new SchemeHandler();
 				profit = handler.getProfit("1001_2500", schemeName);
-			}
-			if (amount >= 2501 && amount <= 4000) {
+			} else if (amount >= 2501 && amount <= 4000) {
 				SchemeHandler handler = new SchemeHandler();
 				profit = handler.getProfit("2501_4000", schemeName);
-			}
-			if (amount >= 4001 && amount <= 6000) {
+			} else if (amount >= 4001 && amount <= 6000) {
 				SchemeHandler handler = new SchemeHandler();
 				profit = handler.getProfit("4001_6000", schemeName);
-			}
-			if (amount >= 6001 && amount <= 8000) {
+			} else if (amount >= 6001 && amount <= 8000) {
 				SchemeHandler handler = new SchemeHandler();
 				profit = handler.getProfit("6001_8000", schemeName);
-			}
-			if (amount >= 8001 && amount <= 10000) {
+			} else if (amount >= 8001 && amount <= 10000) {
 				SchemeHandler handler = new SchemeHandler();
 				profit = handler.getProfit("8001_10000", schemeName);
-			}
-			if (amount >= 10001 && amount <= 13000) {
+			} else if (amount >= 10001 && amount <= 13000) {
 				SchemeHandler handler = new SchemeHandler();
 				profit = handler.getProfit("10001_13000", schemeName);
-			}
-			if (amount >= 13001 && amount <= 15000) {
+			} else if (amount >= 13001 && amount <= 15000) {
 				SchemeHandler handler = new SchemeHandler();
 				profit = handler.getProfit("13001_15000", schemeName);
 			}

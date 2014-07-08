@@ -211,6 +211,7 @@ public class TransactionHandler {
 			stmt.setDouble(1, transaction.getReceivedAmount());
 			stmt.setDouble(2, transaction.getDeliveredAmount());
 			stmt.setDouble(3, transaction.getFee());
+			stmt.setString(4, transaction.getSchemeName());
 
 			System.out.println("Executing query: " + stmt.toString());
 			stmt.executeUpdate();
@@ -236,5 +237,167 @@ public class TransactionHandler {
 				throw new SQLException(e1.getMessage());
 			}
 		}
+	}
+
+	/**
+	 * Retrieve the total received amount on the given date
+	 * 
+	 * @throws Exception
+	 */
+	public double getTotalReceivedAmount(Date d) throws Exception {
+		double result = 0;
+		DbConnection db = DbConnection.getInstance();
+		Connection con = db.getConnection();
+		Statement stmt = null;
+		if (con == null) {
+			throw new Exception("Unable to connect to the database!");
+		}
+		try {
+			stmt = con.createStatement();
+			java.sql.Date date = new java.sql.Date(d.getTime());
+			String query = "SELECT SUM(receivedamount) FROM TRANSACTION WHERE DATE = '"
+					+ date + "';";
+			System.out.println("Query Executed: " + query);
+			ResultSet rs = stmt.executeQuery(query);
+
+			if (rs != null) {
+				while (rs.next()) {
+					result = rs.getDouble(1);
+				}
+			}
+		} catch (Exception e1) {
+			Logger.getGlobal().severe(
+					"Unable to retrieve total received amount from transaction table. "
+							+ e1.getMessage());
+			System.out.println("SQLException: " + e1.getMessage());
+			e1.printStackTrace();
+			throw new Exception(
+					"Unable to retrieve total received amount from transaction table!<p>"
+							+ e1.getMessage());
+		} finally {
+			try {
+				DbConnection.closeConnection();
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the connection or statement: "
+								+ e1.getMessage());
+				System.out.println("SQLException: " + e1.getMessage());
+				e1.printStackTrace();
+				throw new SQLException(
+						"Error occured while closing the connection or statement.");
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Retrieve the total delivered amount on the given date
+	 * 
+	 * @throws Exception
+	 */
+	public double getTotalDeliveredAmount(Date d) throws Exception {
+		double result = 0;
+		DbConnection db = DbConnection.getInstance();
+		Connection con = db.getConnection();
+		Statement stmt = null;
+		if (con == null) {
+			throw new Exception("Unable to connect to the database!");
+		}
+		try {
+			stmt = con.createStatement();
+			java.sql.Date date = new java.sql.Date(d.getTime());
+			String query = "SELECT SUM(deliveredamount) FROM TRANSACTION WHERE DATE = '"
+					+ date + "';";
+			System.out.println("Query Executed: " + query);
+			ResultSet rs = stmt.executeQuery(query);
+
+			if (rs != null) {
+				while (rs.next()) {
+					result = rs.getDouble(1);
+				}
+			}
+		} catch (Exception e1) {
+			Logger.getGlobal().severe(
+					"Unable to retrieve total delivered amount from transaction table. "
+							+ e1.getMessage());
+			System.out.println("SQLException: " + e1.getMessage());
+			e1.printStackTrace();
+			throw new Exception(
+					"Unable to retrieve total delivered amount from transaction table!<p>"
+							+ e1.getMessage());
+		} finally {
+			try {
+				DbConnection.closeConnection();
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the connection or statement: "
+								+ e1.getMessage());
+				System.out.println("SQLException: " + e1.getMessage());
+				e1.printStackTrace();
+				throw new SQLException(
+						"Error occured while closing the connection or statement.");
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Retrieve the total fee amount on the given date
+	 * 
+	 * @throws Exception
+	 */
+	public double getTotalFee(Date d) throws Exception {
+		double result = 0;
+		DbConnection db = DbConnection.getInstance();
+		Connection con = db.getConnection();
+		Statement stmt = null;
+		if (con == null) {
+			throw new Exception("Unable to connect to the database!");
+		}
+		try {
+			stmt = con.createStatement();
+			java.sql.Date date = new java.sql.Date(d.getTime());
+			String query = "SELECT SUM(fee) FROM TRANSACTION WHERE DATE = '"
+					+ date + "';";
+			System.out.println("Query Executed: " + query);
+			ResultSet rs = stmt.executeQuery(query);
+
+			if (rs != null) {
+				while (rs.next()) {
+					result = rs.getDouble(1);
+				}
+			}
+		} catch (Exception e1) {
+			Logger.getGlobal().severe(
+					"Unable to retrieve total fee amount from transaction table. "
+							+ e1.getMessage());
+			System.out.println("SQLException: " + e1.getMessage());
+			e1.printStackTrace();
+			throw new Exception(
+					"Unable to retrieve total fee amount from transaction table!<p>"
+							+ e1.getMessage());
+		} finally {
+			try {
+				DbConnection.closeConnection();
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the connection or statement: "
+								+ e1.getMessage());
+				System.out.println("SQLException: " + e1.getMessage());
+				e1.printStackTrace();
+				throw new SQLException(
+						"Error occured while closing the connection or statement.");
+			}
+		}
+		return result;
 	}
 }
