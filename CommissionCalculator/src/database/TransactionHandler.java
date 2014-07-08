@@ -27,7 +27,7 @@ public class TransactionHandler {
 		}
 		try {
 			stmt = (PreparedStatement) conn
-					.prepareStatement("INSERT INTO transaction(receivedamount,deliveredamount,fee, date, schemename) "
+					.prepareStatement("INSERT INTO transaction(receivedamount,deliveredamount,fee, date, scheme_name) "
 							+ "VALUES (?,?,?,?,?)");
 
 			java.sql.Date d = new java.sql.Date(date.getTime());
@@ -94,7 +94,7 @@ public class TransactionHandler {
 					tr.setDeliveredAmount(rs.getDouble("deliveredamount"));
 					tr.setFee(rs.getDouble("fee"));
 					tr.setDate(rs.getDate("Date"));
-					tr.setSchemeName(rs.getString("Schemename"));
+					tr.setSchemeName(rs.getString("scheme_name"));
 					result.add(tr);
 				}
 			}
@@ -145,8 +145,8 @@ public class TransactionHandler {
 						+ "' AND DATE >= '" + fromDate + "';";
 			} else {
 				query = "SELECT * FROM TRANSACTION WHERE DATE <= '" + toDate
-						+ "' AND DATE >= '" + fromDate + "' AND schemename = '"
-						+ schemeName + "';";
+						+ "' AND DATE >= '" + fromDate
+						+ "' AND scheme_name = '" + schemeName + "';";
 			}
 			System.out.println("Query Executed: " + query);
 			ResultSet rs = stmt.executeQuery(query);
@@ -160,7 +160,7 @@ public class TransactionHandler {
 					tr.setDeliveredAmount(rs.getDouble("deliveredamount"));
 					tr.setFee(rs.getDouble("fee"));
 					tr.setDate(rs.getDate("Date"));
-					tr.setSchemeName(rs.getString("Schemename"));
+					tr.setSchemeName(rs.getString("scheme_name"));
 					result.add(tr);
 				}
 			}
@@ -205,7 +205,7 @@ public class TransactionHandler {
 		}
 		try {
 			stmt = (PreparedStatement) conn
-					.prepareStatement("UPDATE transaction SET receivedamount = ?, deliveredamount = ?, fee = ?,schemename=? "
+					.prepareStatement("UPDATE transaction SET receivedamount = ?, deliveredamount = ?, fee = ?,scheme_name=? "
 							+ " where ID = " + transaction.getId() + ";");
 
 			stmt.setDouble(1, transaction.getReceivedAmount());

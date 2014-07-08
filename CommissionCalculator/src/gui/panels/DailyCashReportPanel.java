@@ -38,6 +38,8 @@ public class DailyCashReportPanel extends AbstractPanel {
 
 	private JButton exitBtn = null;
 
+	private JButton getReportBtn = null;
+
 	public DailyCashReportPanel() {
 		addPanels();
 		retrieveData();
@@ -67,16 +69,16 @@ public class DailyCashReportPanel extends AbstractPanel {
 		GridBagConstraints c = new GridBagConstraints();
 
 		setGridBagConstraints(c, 0, 0, GridBagConstraints.LINE_START, 10, 0);
-		centerPanel.add(cashLbl, c);
-
-		setGridBagConstraints(c, 1, 0, GridBagConstraints.LINE_END, 10, 10);
-		centerPanel.add(cashTxt, c);
-
-		setGridBagConstraints(c, 0, 1, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(dateLbl, c);
 
-		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
+		setGridBagConstraints(c, 1, 0, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(datePkr, c);
+
+		setGridBagConstraints(c, 0, 1, GridBagConstraints.LINE_START, 10, 0);
+		centerPanel.add(cashLbl, c);
+
+		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
+		centerPanel.add(cashTxt, c);
 
 		setGridBagConstraints(c, 0, 2, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(receivedAmountLbl, c);
@@ -118,6 +120,17 @@ public class DailyCashReportPanel extends AbstractPanel {
 			}
 		});
 
+		getReportBtn = new JButton("Get Report");
+
+		buttonPanel.add(getReportBtn);
+		getReportBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				retrieveData();
+			}
+		});
 		buttonPanel.add(exitBtn);
 
 		return buttonPanel;

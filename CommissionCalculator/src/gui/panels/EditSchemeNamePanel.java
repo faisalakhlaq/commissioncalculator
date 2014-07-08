@@ -7,6 +7,7 @@ import gui.dailogue.MessageDialog;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -53,29 +54,19 @@ public class EditSchemeNamePanel extends AbstractPanel {
 		populateSchemeNamesCbx();
 		GridBagConstraints c = new GridBagConstraints();
 
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 0, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(schemeNameLbl, c);
 
-		c.gridx = 1;
-		c.gridy = 0;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 0, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(schemeNamecbx, c);
 
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 0, 1, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(newNameLbl, c);
 
-		c.gridx = 1;
-		c.gridy = 1;
-		c.gridwidth = 1;
+		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(newNameTxt, c);
 
-		c.gridx = 0;
-		c.gridy = 3;
-		c.gridwidth = 2;
+		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(resultMsgLbl, c);
 
 		return centerPanel;
@@ -182,4 +173,16 @@ public class EditSchemeNamePanel extends AbstractPanel {
 		newNameTxt.setText(null);
 	}
 
+	private void setGridBagConstraints(GridBagConstraints c, int gridx,
+			int gridy, int placement, int paddingTop, int paddingLeft) {
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = placement;
+		c.insets = new Insets(paddingTop, paddingLeft, 0, 0); // top and left
+																// padding
+		c.weightx = 0.75;
+		c.weighty = 0;
+		c.gridx = gridx;
+		c.gridy = gridy;
+		c.gridwidth = 1;
+	}
 }
