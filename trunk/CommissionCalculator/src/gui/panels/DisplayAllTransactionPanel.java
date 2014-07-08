@@ -32,6 +32,10 @@ public class DisplayAllTransactionPanel extends AbstractPanel {
 
 	private JTable table = new JTable();
 
+	private JLabel receivedAmountLbl = null;
+	private JLabel deliveredAmountLbl = null;
+	private JLabel feeLbl = null;
+
 	private Vector<Transaction> transactionList = null;
 
 	private String[] columnNames = { "ID", "Received Amount ",
@@ -66,7 +70,7 @@ public class DisplayAllTransactionPanel extends AbstractPanel {
 		c.gridwidth = 1;
 		add(buttonPanel, c);
 
-		updateProfitLabel();
+		updateLabels();
 	}
 
 	public GuiPanel getButtonPanel() {
@@ -120,6 +124,9 @@ public class DisplayAllTransactionPanel extends AbstractPanel {
 
 		profitLbl = new JLabel("Total Profit = ");
 		JLabel headingLbl = new JLabel("All Transaction");
+		receivedAmountLbl = new JLabel("Received Amount");
+		deliveredAmountLbl = new JLabel("Delivered Amount");
+		feeLbl = new JLabel("Total Fee");
 
 		GridBagConstraints hc = new GridBagConstraints();
 
@@ -141,6 +148,35 @@ public class DisplayAllTransactionPanel extends AbstractPanel {
 		hc.gridy = 1;
 		hc.gridwidth = 1;
 		bannerPanel.add(profitLbl, hc);
+
+		hc.fill = GridBagConstraints.VERTICAL;
+		hc.anchor = GridBagConstraints.CENTER;
+		hc.weightx = 0.75;
+		hc.weighty = 0;
+		hc.gridx = 0;
+		hc.gridy = 2;
+		hc.gridwidth = 1;
+		bannerPanel.add(receivedAmountLbl, hc);
+
+		hc.fill = GridBagConstraints.VERTICAL;
+		hc.anchor = GridBagConstraints.CENTER;
+		hc.insets = new Insets(5, 0, 0, 0);
+		hc.weightx = 0.75;
+		hc.weighty = 0;
+		hc.gridx = 0;
+		hc.gridy = 3;
+		hc.gridwidth = 1;
+		bannerPanel.add(deliveredAmountLbl, hc);
+
+		hc.fill = GridBagConstraints.VERTICAL;
+		hc.anchor = GridBagConstraints.CENTER;
+		hc.insets = new Insets(5, 0, 0, 0);
+		hc.weightx = 0.75;
+		hc.weighty = 0;
+		hc.gridx = 0;
+		hc.gridy = 4;
+		hc.gridwidth = 1;
+		bannerPanel.add(feeLbl, hc);
 
 		return bannerPanel;
 	}
@@ -168,8 +204,23 @@ public class DisplayAllTransactionPanel extends AbstractPanel {
 		return total;
 	}
 
-	private void updateProfitLabel() {
+	private void updateLabels() {
 		profitLbl.setText(profitLbl.getText() + getTotalProfit());
+		double rAmount = 0;
+		double dAmount = 0;
+		double fee = 0;
+		int size = transactionList.size();
+		for (int i = 0; i < size; i++) {
+			Transaction t = transactionList.get(i);
+			rAmount += t.getReceivedAmount();
+			dAmount += t.getDeliveredAmount();
+			fee += t.getFee();
+		}
+		receivedAmountLbl.setText("Received Amount = "
+				+ String.valueOf(rAmount));
+		deliveredAmountLbl.setText("Delivered Amount = "
+				+ String.valueOf(dAmount));
+		feeLbl.setText("Total Fee = " + String.valueOf(fee));
 	}
 
 	public void createAndShowGUI() {

@@ -11,66 +11,58 @@ import model.Scheme;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class SchemeHandler
-{
+public class SchemeHandler {
 	private DbConnection db = null;
 
-	public SchemeHandler()
-	{
+	public SchemeHandler() {
 	}
 
-	public void deleteScheme(String schemeName)
-	{
+	public void deleteScheme(String schemeName) {
 		DbConnection db = DbConnection.getInstance();
 		Connection conn = db.getConnection();
 		PreparedStatement stmt = null;
 
-		if (conn == null)
-		{
+		if (conn == null) {
 			return;
 		}
-		try
-		{
-			stmt = (PreparedStatement) conn.prepareStatement("DELETE from SCHEME where SCHEME_NAME = '" + schemeName + "';");
+		try {
+			stmt = (PreparedStatement) conn
+					.prepareStatement("DELETE from SCHEME where SCHEME_NAME = '"
+							+ schemeName + "';");
 			stmt.executeUpdate();
-		}
-		catch (SQLException e1)
-		{
-			Logger.getGlobal().severe("Error occured while deleted the schemeName: " + e1.getMessage());
+		} catch (SQLException e1) {
+			Logger.getGlobal().severe(
+					"Error occured while deleted the schemeName: "
+							+ e1.getMessage());
 			System.out.println("SQLException: " + e1.getMessage());
 			e1.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
+		} finally {
+			try {
 				DbConnection.getInstance();
-				if (stmt != null)
-				{
+				if (stmt != null) {
 					stmt.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while delete schemeName: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while delete schemeName: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
 			}
 		}
 	}
 
-	public void createScheme(String sName, String cName, double a, double b, double c, double d, double e, double f, double g, double h) throws Exception
-	{
+	public void createScheme(String sName, String cName, double a, double b,
+			double c, double d, double e, double f, double g, double h)
+			throws Exception {
 		DbConnection db = DbConnection.getInstance();
 		Connection conn = db.getConnection();
 		PreparedStatement stmt = null;
 
-		if (conn == null)
-		{
+		if (conn == null) {
 			throw new Exception("Unable to connect to the database");
 		}
-		try
-		{
+		try {
 			stmt = (PreparedStatement) conn
 					.prepareStatement("INSERT INTO scheme(company_name, scheme_name, 1_1000, 1001_2500, 2501_4000, 4001_6000, 6001_8000, 8001_10000, 10001_13000, 13001_15000) "
 							+ "VALUES (?,?,?,?,?,?,?,?,?,?)");
@@ -87,57 +79,51 @@ public class SchemeHandler
 			stmt.setDouble(10, h);
 
 			stmt.executeUpdate();
-		}
-		catch (SQLException e1)
-		{
-			Logger.getGlobal().severe("Error occured while creating new scheme: " + e1.getMessage());
+		} catch (SQLException e1) {
+			Logger.getGlobal().severe(
+					"Error occured while creating new scheme: "
+							+ e1.getMessage());
 			System.out.println("SQLException: " + e1.getMessage());
 			e1.printStackTrace();
-			throw new SQLException("Error occured while creating new scheme" + e1.getMessage());
-		}
-		finally
-		{
-			try
-			{
+			throw new SQLException("Error occured while creating new scheme"
+					+ e1.getMessage());
+		} finally {
+			try {
 				DbConnection.getInstance();
-				if (stmt != null)
-				{
+				if (stmt != null) {
 					stmt.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while closing the database connection: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the database connection: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
-				throw new SQLException("Error occured while closing the database connection: " + e1.getMessage());
+				throw new SQLException(
+						"Error occured while closing the database connection: "
+								+ e1.getMessage());
 			}
 		}
 	}
 
-	public Vector<Scheme> getAllSchemes() throws Exception
-	{
+	public Vector<Scheme> getAllSchemes() throws Exception {
 		Vector<Scheme> schemeVector = null;
 		db = DbConnection.getInstance();
 		Connection con = db.getConnection();
 		Statement stmt = null;
 
-		if (con == null)
-		{
+		if (con == null) {
 			throw new Exception("Unable to connect to the database!");
 		}
-		try
-		{
+		try {
 			stmt = con.createStatement();
 			String query = "SELECT * FROM scheme";
 			System.out.println("Query Executed: " + query);
 			ResultSet rs = stmt.executeQuery(query);
 
-			if (rs != null)
-			{
+			if (rs != null) {
 				schemeVector = new Vector<Scheme>();
-				while (rs.next())
-				{
+				while (rs.next()) {
 					Scheme sc = new Scheme();
 					sc.setSchemeName(rs.getString("scheme_name"));
 					sc.setCompanyName(rs.getString("company_name"));
@@ -152,147 +138,140 @@ public class SchemeHandler
 					schemeVector.add(sc);
 				}
 			}
-		}
-		catch (Exception e1)
-		{
-			Logger.getGlobal().severe("Unable to retrieve scheme details from the database. " + e1.getMessage());
+		} catch (Exception e1) {
+			Logger.getGlobal().severe(
+					"Unable to retrieve scheme details from the database. "
+							+ e1.getMessage());
 			System.out.println("SQLException: " + e1.getMessage());
 			e1.printStackTrace();
-			throw new Exception("Unable to retrieve scheme details data from the database!<p>" + e1.getMessage());
-		}
-		finally
-		{
-			try
-			{
+			throw new Exception(
+					"Unable to retrieve scheme details data from the database!<p>"
+							+ e1.getMessage());
+		} finally {
+			try {
 				DbConnection.closeConnection();
-				if (stmt != null)
-				{
+				if (stmt != null) {
 					stmt.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while closing the connection or statement: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the connection or statement: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
-				throw new SQLException("Error occured while closing the connection or statement.");
+				throw new SQLException(
+						"Error occured while closing the connection or statement.");
 			}
 		}
 		return schemeVector;
 	}
 
-	public Vector<String> getSchemeNames() throws SQLException
-	{
+	public Vector<String> getSchemeNames() throws SQLException {
 		Vector<String> names = null;
 		DbConnection db = DbConnection.getInstance();
 		Connection conn = db.getConnection();
 
 		String query = "Select scheme_name from scheme;";
 		Statement st = null;
-		try
-		{
+		try {
 			st = conn.createStatement();
 			ResultSet rs = st.executeQuery(query);
-			if (rs != null)
-			{
+			if (rs != null) {
 				names = new Vector<String>();
-				while (rs.next())
-				{
+				while (rs.next()) {
 					names.add(rs.getString("scheme_name"));
 				}
 			}
-		}
-		catch (SQLException e1)
-		{
-			Logger.getGlobal().severe("Error occured while retrieving scheme names: " + e1.getMessage());
+		} catch (SQLException e1) {
+			Logger.getGlobal().severe(
+					"Error occured while retrieving scheme names: "
+							+ e1.getMessage());
 			System.out.println("SQLException: " + e1.getMessage());
 			e1.printStackTrace();
-			throw new SQLException("Error occured while retrieving scheme names" + e1.getMessage());
-		}
-		finally
-		{
-			try
-			{
+			throw new SQLException(
+					"Error occured while retrieving scheme names"
+							+ e1.getMessage());
+		} finally {
+			try {
 				DbConnection.closeConnection();
-				if (st != null)
-				{
+				if (st != null) {
 					st.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while closing the database connection: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the database connection: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
-				throw new SQLException("Error occured while closing the database connection" + e1.getMessage());
+				throw new SQLException(
+						"Error occured while closing the database connection"
+								+ e1.getMessage());
 			}
 		}
 		return names;
 	}
 
-	public double getProfit(String range, String schemeName) throws SQLException
-	{
+	public double getProfit(String range, String schemeName)
+			throws SQLException {
 		double result = 0;
 		DbConnection db = DbConnection.getInstance();
 		Connection conn = db.getConnection();
 
-		String query = "Select " + range + " from scheme where scheme_name = '" + schemeName + "';";
+		String query = "Select " + range + " from scheme where scheme_name = '"
+				+ schemeName + "';";
 		System.out.println("Executing query: " + query);
 		Statement stmt = conn.createStatement();
-		try
-		{
+		try {
 			ResultSet rs = stmt.executeQuery(query);
-			if (rs != null)
-			{
-				while (rs.next())
-				{
+			if (rs != null) {
+				while (rs.next()) {
 					result = rs.getDouble(range);
 				}
 			}
-		}
-		catch (SQLException e)
-		{
+		} catch (SQLException e) {
 			System.out.println("SQL Exception: " + e.getMessage());
 			e.printStackTrace();
-			throw new SQLException("Error occured while calculating the profit: " + e.getMessage());
-		}
-		finally
-		{
-			try
-			{
+			throw new SQLException(
+					"Error occured while calculating the profit: "
+							+ e.getMessage());
+		} finally {
+			try {
 				DbConnection.closeConnection();
-				if (stmt != null)
-				{
+				if (stmt != null) {
 					stmt.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while closing the database connection: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the database connection: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
-				throw new SQLException("Error occured while closing the database connection" + e1.getMessage());
+				throw new SQLException(
+						"Error occured while closing the database connection"
+								+ e1.getMessage());
 			}
 		}
 		return result;
 	}
 
-	public void updateScheme(Scheme s) throws Exception
-	{
+	public void updateScheme(Scheme s) throws Exception {
 		DbConnection db = DbConnection.getInstance();
 		Connection conn = db.getConnection();
 		PreparedStatement stmt = null;
 
-		if (conn == null)
-		{
-			Logger.getGlobal().severe("Unable to get the connection to the database");
+		if (conn == null) {
+			Logger.getGlobal().severe(
+					"Unable to get the connection to the database");
 			System.out.println("Unable to get the connection to the database");
 			throw new Exception("Unable to get the connection to the database");
 		}
-		try
-		{
-			stmt = (PreparedStatement) conn.prepareStatement("UPDATE scheme SET scheme_name = ?, company_name = ?, 1_1000 = ?, 1001_2500 = ?, 2501_4000 = ?, 4001_6000 = ?"
-					+ ", 6001_8000 = ?, 8001_10000 = ?, 10001_13000 = ?, 13001_15000 = ?" + " where scheme_name = '" + s.getSchemeName() + "';");
+		try {
+			stmt = (PreparedStatement) conn
+					.prepareStatement("UPDATE scheme SET scheme_name = ?, company_name = ?, 1_1000 = ?, 1001_2500 = ?, 2501_4000 = ?, 4001_6000 = ?"
+							+ ", 6001_8000 = ?, 8001_10000 = ?, 10001_13000 = ?, 13001_15000 = ?"
+							+ " where scheme_name = '"
+							+ s.getSchemeName()
+							+ "';");
 
 			stmt.setString(1, s.getSchemeName());
 			stmt.setString(2, s.getCompanyName());
@@ -307,80 +286,84 @@ public class SchemeHandler
 
 			System.out.println("Executing query: " + stmt.toString());
 			stmt.executeUpdate();
-		}
-		catch (SQLException e1)
-		{
-			Logger.getGlobal().severe("Error occured while updating the scheme: " + e1.getMessage());
+		} catch (SQLException e1) {
+			Logger.getGlobal().severe(
+					"Error occured while updating the scheme: "
+							+ e1.getMessage());
 			System.out.println("SQLException: " + e1.getMessage());
 			e1.printStackTrace();
-			throw new SQLException("Error occured while updating the scheme" + e1.getMessage());
-		}
-		finally
-		{
-			try
-			{
+			throw new SQLException("Error occured while updating the scheme"
+					+ e1.getMessage());
+		} finally {
+			try {
 				DbConnection.getInstance();
-				if (stmt != null)
-				{
+				if (stmt != null) {
 					stmt.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while closing the database connection: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the database connection: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
-				throw new SQLException("Error occured while closing the database connection" + e1.getMessage());
+				throw new SQLException(
+						"Error occured while closing the database connection"
+								+ e1.getMessage());
 			}
 		}
 	}
 
-	// TODO when scheme name is updated that name should be
-	// updated in the transaction table as well
-	public void updateSchemeName(String oldName, String newName) throws Exception
-	{
+	/**
+	 * Updates the scheme name in scheme and transaction tables
+	 */
+	public void updateSchemeName(String oldName, String newName)
+			throws Exception {
 		DbConnection db = DbConnection.getInstance();
 		Connection conn = db.getConnection();
 		PreparedStatement stmt = null;
 
-		if (conn == null)
-		{
-			Logger.getGlobal().severe("Unable to get the connection to the database");
+		if (conn == null) {
+			Logger.getGlobal().severe(
+					"Unable to get the connection to the database");
 			System.out.println("Unable to get the connection to the database");
 			throw new Exception("Unable to get the connection to the database");
 		}
-		try
-		{
-			stmt = (PreparedStatement) conn.prepareStatement("UPDATE scheme SET scheme_name = ? where scheme_name = '" + oldName + "';");
+		try {
+			stmt = (PreparedStatement) conn
+					.prepareStatement("UPDATE scheme, transaction SET scheme.scheme_name = ?, transaction.scheme_name = ? where SCHEME.scheme_name = '"
+							+ oldName
+							+ "' AND TRANSACTION.SCHEME_NAME = '"
+							+ oldName + "';");
 
 			stmt.setString(1, newName);
+			stmt.setString(2, newName);
 
 			System.out.println("Executing query: " + stmt.getPreparedSql());
 			stmt.executeUpdate();
-		}
-		catch (SQLException e1)
-		{
-			Logger.getGlobal().severe("Error occured while updateing the scheme name: " + e1.getMessage());
+		} catch (SQLException e1) {
+			Logger.getGlobal().severe(
+					"Error occured while updateing the scheme name: "
+							+ e1.getMessage());
 			System.out.println("SQLException: " + e1.getMessage());
 			e1.printStackTrace();
-			throw new SQLException("Error occured while updateing the scheme name" + e1.getMessage());
-		}
-		finally
-		{
-			try
-			{
+			throw new SQLException(
+					"Error occured while updateing the scheme name"
+							+ e1.getMessage());
+		} finally {
+			try {
 				DbConnection.getInstance();
-				if (stmt != null)
-				{
+				if (stmt != null) {
 					stmt.close();
 				}
-			}
-			catch (SQLException e1)
-			{
-				Logger.getGlobal().severe("Error occured while closing the database connection: " + e1.getMessage());
+			} catch (SQLException e1) {
+				Logger.getGlobal().severe(
+						"Error occured while closing the database connection: "
+								+ e1.getMessage());
 				System.out.println("SQLException: " + e1.getMessage());
 				e1.printStackTrace();
-				throw new SQLException("Error occured while closing the database connection" + e1.getMessage());
+				throw new SQLException(
+						"Error occured while closing the database connection"
+								+ e1.getMessage());
 			}
 		}
 	}
