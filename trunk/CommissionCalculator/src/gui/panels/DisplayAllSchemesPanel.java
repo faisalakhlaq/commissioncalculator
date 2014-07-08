@@ -74,7 +74,6 @@ public class DisplayAllSchemesPanel extends AbstractPanel
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				// TODO Auto-generated method stub
 				DesktopTabbedPane desktop = DesktopTabbedPane.getInstance();
 				desktop.removeTabAt(desktop.getSelectedIndex());
 			}

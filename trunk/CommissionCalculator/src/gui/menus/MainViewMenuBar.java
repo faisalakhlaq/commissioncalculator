@@ -1,6 +1,8 @@
 package gui.menus;
 
 import gui.dailogue.MessageDialog;
+import gui.panels.DailyCashPanel;
+import gui.panels.DailyCashReportPanel;
 import gui.panels.DesktopTabbedPane;
 import gui.panels.DisplayAllSchemesPanel;
 import gui.panels.EditSchemeNamePanel;
@@ -14,7 +16,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import model.Scheme;
-
 import database.SchemeHandler;
 
 @SuppressWarnings("serial")
@@ -154,6 +155,30 @@ public class MainViewMenuBar extends JMenuBar
 			{
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 				desktopPane.showPanel("TRANSACTION_REPORT");
+			}
+		});
+		JMenuItem dailyCash = new JMenuItem("Insert Daily Cash");
+		transactionMenu.add(dailyCash);
+		dailyCash.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				DailyCashPanel cashPanel = new DailyCashPanel();
+				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
+				desktopPane.addPanel("Daily Cash", cashPanel);
+			}
+		});
+		JMenuItem dailyCashReport = new JMenuItem("View Cash Report");
+		transactionMenu.add(dailyCashReport);
+		dailyCashReport.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				DailyCashReportPanel cashPanel = new DailyCashReportPanel();
+				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
+				desktopPane.addPanel("Daily Cash Report", cashPanel);
 			}
 		});
 	}
