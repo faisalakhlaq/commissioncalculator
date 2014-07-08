@@ -101,6 +101,8 @@ public class EditSchemeNamePanel extends AbstractPanel
 				SchemeHandler handler = new SchemeHandler();
 				try
 				{
+					// TODO when scheme name is updated that name should be
+					// updated in the transaction table as well
 					handler.updateSchemeName(oldName, newName);
 					clearTextFields();
 					populateSchemeNamesCbx();

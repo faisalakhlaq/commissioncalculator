@@ -335,6 +335,8 @@ public class SchemeHandler
 		}
 	}
 
+	// TODO when scheme name is updated that name should be
+	// updated in the transaction table as well
 	public void updateSchemeName(String oldName, String newName) throws Exception
 	{
 		DbConnection db = DbConnection.getInstance();
