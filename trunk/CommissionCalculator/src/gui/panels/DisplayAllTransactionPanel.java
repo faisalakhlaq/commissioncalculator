@@ -11,6 +11,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,8 +25,7 @@ import table.TransactionTableModelListener;
 import utils.Helper;
 
 @SuppressWarnings("serial")
-public class DisplayAllTransactionPanel extends AbstractPanel
-{
+public class DisplayAllTransactionPanel extends AbstractPanel {
 	private JButton exitbtn = null;
 
 	private JLabel profitLbl = null;
@@ -34,17 +34,16 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 
 	private Vector<Transaction> transactionList = null;
 
-	private String[] columnNames =
-	{ "ID", "Amount ", "Date", "Scheme", "Profit" };
+	private String[] columnNames = { "ID", "Received Amount ",
+			"Delivered Amount", "Fee", "Date", "Scheme", "Profit" };
 
-	public DisplayAllTransactionPanel(Vector<Transaction> list)
-	{
-		if (list != null) transactionList = new Vector<Transaction>(list);
+	public DisplayAllTransactionPanel(Vector<Transaction> list) {
+		if (list != null)
+			transactionList = new Vector<Transaction>(list);
 		addPanels();
 	}
 
-	public void addPanels()
-	{
+	public void addPanels() {
 		GuiPanel bannerPanel = getBannerPanel();
 		GuiPanel centerPanel = getCenterPanel();
 		GuiPanel buttonPanel = getButtonPanel();
@@ -70,17 +69,14 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 		updateProfitLabel();
 	}
 
-	public GuiPanel getButtonPanel()
-	{
+	public GuiPanel getButtonPanel() {
 		GuiPanel buttonPanel = new GuiPanel();
 
 		exitbtn = new JButton("Exit");
-		exitbtn.addActionListener(new ActionListener()
-		{
+		exitbtn.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				DesktopTabbedPane desktop = DesktopTabbedPane.getInstance();
 				desktop.removeTabAt(desktop.getSelectedIndex());
 			}
@@ -90,9 +86,9 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 		return buttonPanel;
 	}
 
-	public GuiPanel getCenterPanel()
-	{
-		TransactionTableModel model = new TransactionTableModel(transactionList, columnNames);
+	public GuiPanel getCenterPanel() {
+		TransactionTableModel model = new TransactionTableModel(
+				transactionList, columnNames);
 		model.addTableModelListener(new TransactionTableModelListener());
 		table.setModel(model);
 		table.setTableHeader(table.getTableHeader()); // ADDED THIS
@@ -118,8 +114,7 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 		return p;
 	}
 
-	public GuiPanel getBannerPanel()
-	{
+	public GuiPanel getBannerPanel() {
 		GuiPanel bannerPanel = new GuiPanel();
 		bannerPanel.setLayout(new GridBagLayout());
 
@@ -154,29 +149,30 @@ public class DisplayAllTransactionPanel extends AbstractPanel
 	 * Get the total profit by accessing the last column of the table and
 	 * calculating the sum of all the values
 	 */
-	private double getTotalProfit()
-	{
+	private double getTotalProfit() {
 		double total = 0;
 		TableModel model = table.getModel();
 		int cols = table.getColumnCount();
 		int rows = table.getRowCount();
 		int colNumber = cols - 1;
 
-		for (int i = 0; i < rows; i++)
-		{
+		for (int i = 0; i < rows; i++) {
 			Object value = model.getValueAt(i, colNumber);
-			total += Helper.objectToDouble(value);
+			try {
+				total += Helper.objectToDouble(value);
+			} catch (Exception e) {
+				Logger.getGlobal()
+						.severe("Error converting value to number while calculating the total profit ");
+			}
 		}
 		return total;
 	}
 
-	private void updateProfitLabel()
-	{
+	private void updateProfitLabel() {
 		profitLbl.setText(profitLbl.getText() + getTotalProfit());
 	}
 
-	public void createAndShowGUI()
-	{
+	public void createAndShowGUI() {
 		this.setVisible(true);
 	}
 }
