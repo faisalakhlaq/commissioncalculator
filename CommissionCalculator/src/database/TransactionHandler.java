@@ -18,7 +18,7 @@ public class TransactionHandler
 	{
 	}
 
-	public void saveTransaction(int amount, java.util.Date date, String sName) throws Exception
+	public void saveTransaction(double receivedamount,double deliveredamount,double fee, java.util.Date date, String sName) throws Exception
 	{
 		DbConnection db = DbConnection.getInstance();
 		Connection conn = db.getConnection();
@@ -30,13 +30,15 @@ public class TransactionHandler
 		}
 		try
 		{
-			stmt = (PreparedStatement) conn.prepareStatement("INSERT INTO transaction(amount, date, schemename) " + "VALUES (?,?,?)");
+			stmt = (PreparedStatement) conn.prepareStatement("INSERT INTO transaction(receivedamount,deliveredamount,fee, date, schemename) " + "VALUES (?,?,?,?,?)");
 
 			java.sql.Date d = new java.sql.Date(date.getTime());
 
-			stmt.setInt(1, amount);
-			stmt.setDate(2, d);
-			stmt.setString(3, sName);
+			stmt.setDouble(1, receivedamount);
+			stmt.setDouble(2, deliveredamount);
+			stmt.setDouble(3, fee);
+			stmt.setDate(4, d);
+			stmt.setString(5, sName);
 			stmt.executeUpdate();
 		}
 		catch (SQLException e1)
