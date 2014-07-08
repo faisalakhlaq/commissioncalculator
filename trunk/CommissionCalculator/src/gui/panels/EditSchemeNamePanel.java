@@ -19,8 +19,7 @@ import javax.swing.JTextField;
 import database.SchemeHandler;
 
 @SuppressWarnings("serial")
-public class EditSchemeNamePanel extends AbstractPanel
-{
+public class EditSchemeNamePanel extends AbstractPanel {
 	private JButton saveBtn = null;
 
 	private JButton refreshBtn = null;
@@ -37,14 +36,12 @@ public class EditSchemeNamePanel extends AbstractPanel
 
 	private JLabel resultMsgLbl;
 
-	public EditSchemeNamePanel()
-	{
+	public EditSchemeNamePanel() {
 		addPanels();
 	}
 
 	@Override
-	public GuiPanel getCenterPanel()
-	{
+	public GuiPanel getCenterPanel() {
 		GuiPanel centerPanel = new GuiPanel();
 		centerPanel.setLayout(new GridBagLayout());
 
@@ -85,50 +82,40 @@ public class EditSchemeNamePanel extends AbstractPanel
 	}
 
 	@Override
-	public GuiPanel getButtonPanel()
-	{
+	public GuiPanel getButtonPanel() {
 		GuiPanel buttonPanel = new GuiPanel();
 
 		saveBtn = new JButton("Save");
-		saveBtn.addActionListener(new ActionListener()
-		{
+		saveBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				String newName = newNameTxt.getText();
 				String oldName = schemeNamecbx.getSelectedItem().toString();
 
 				SchemeHandler handler = new SchemeHandler();
-				try
-				{
+				try {
 					// TODO when scheme name is updated that name should be
 					// updated in the transaction table as well
 					handler.updateSchemeName(oldName, newName);
 					clearTextFields();
 					populateSchemeNamesCbx();
 					displayMessage(true);
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					new MessageDialog("Error", e.getMessage());
 				}
 			}
 		});
 		refreshBtn = new JButton("Refresh");
-		refreshBtn.addActionListener(new ActionListener()
-		{
+		refreshBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				populateSchemeNamesCbx();
 			}
 		});
 		exitBtn = new JButton("Exit");
-		exitBtn.addActionListener(new ActionListener()
-		{
+		exitBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				DesktopTabbedPane pane = DesktopTabbedPane.getInstance();
 				pane.remove(EditSchemeNamePanel.this);
 			}
@@ -142,35 +129,26 @@ public class EditSchemeNamePanel extends AbstractPanel
 	}
 
 	@Override
-	public GuiPanel getBannerPanel()
-	{
+	public GuiPanel getBannerPanel() {
 		GuiPanel bannerPanel = new GuiPanel();
 		bannerPanel.add(new JLabel("Edit Scheme Name"), BorderLayout.CENTER);
 
 		return bannerPanel;
 	}
 
-	private void displayMessage(final boolean success)
-	{
-		Thread t = new Thread()
-		{
-			public void run()
-			{
-				try
-				{
-					if (success)
-					{
-						resultMsgLbl.setText("Scheme Name changed successfully");
-					}
-					else
-					{
+	private void displayMessage(final boolean success) {
+		Thread t = new Thread() {
+			public void run() {
+				try {
+					if (success) {
+						resultMsgLbl
+								.setText("Scheme Name changed successfully");
+					} else {
 						resultMsgLbl.setText("Sorry! Unsuccessfull");
 					}
 					Thread.sleep(2000);
 					resultMsgLbl.setText(null);
-				}
-				catch (InterruptedException e)
-				{
+				} catch (InterruptedException e) {
 					new MessageDialog("Error", e.getMessage());
 					e.printStackTrace();
 				}
@@ -179,34 +157,28 @@ public class EditSchemeNamePanel extends AbstractPanel
 		t.start();
 	}
 
-	private void populateSchemeNamesCbx()
-	{
-		if (schemeNamecbx == null)
-		{
+	private void populateSchemeNamesCbx() {
+		if (schemeNamecbx == null) {
 			schemeNamecbx = new JComboBox<String>();
 		}
 		SchemeHandler handler = new SchemeHandler();
 		Vector<String> schemeNames = null;
-		try
-		{
+		try {
 			schemeNames = handler.getSchemeNames();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			new MessageDialog("Error", e.getMessage());
 		}
-		if (schemeNames == null)
-		{
-			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>());
-		}
-		else
-		{
-			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>(schemeNames));
+		if (schemeNames == null) {
+			schemeNamecbx
+					.setModel(new javax.swing.DefaultComboBoxModel<String>());
+		} else {
+			schemeNamecbx
+					.setModel(new javax.swing.DefaultComboBoxModel<String>(
+							schemeNames));
 		}
 	}
 
-	private void clearTextFields()
-	{
+	private void clearTextFields() {
 		newNameTxt.setText(null);
 	}
 
