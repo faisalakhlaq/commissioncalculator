@@ -2,64 +2,68 @@ package model;
 
 import java.sql.Date;
 
-public class Transaction implements ModelObject
-{
+public class Transaction implements ModelObject {
 	private int id;
-
-	private double amount;
-
+	private double receivedAmount;
+	private double deliveredAmount;
+	private double fee;
 	private Date date;
-
 	private String schemeName;
 
-	public Transaction()
-	{
+	public Transaction() {
 	}
 
-	public Transaction(double amount, Date date, String scheme)
-	{
-		this.amount = amount;
+	public Transaction(double amount, Date date, String scheme) {
+		this.receivedAmount = amount;
 		this.date = date;
 		this.schemeName = scheme;
 	}
 
-	public int getId()
-	{
+	public int getId() {
 		return id;
 	}
 
-	public void setId(int id)
-	{
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public double getAmount()
-	{
-		return amount;
+	public double getReceivedAmount() {
+		return receivedAmount;
 	}
 
-	public void setAmount(double amount)
-	{
-		this.amount = amount;
+	public void setReceivedAmount(double receivedAmount) {
+		this.receivedAmount = receivedAmount;
 	}
 
-	public Date getDate()
-	{
+	public double getDeliveredAmount() {
+		return deliveredAmount;
+	}
+
+	public void setDeliveredAmount(double deliveredAmount) {
+		this.deliveredAmount = deliveredAmount;
+	}
+
+	public double getFee() {
+		return fee;
+	}
+
+	public void setFee(double fee) {
+		this.fee = fee;
+	}
+
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(Date date)
-	{
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
-	public String getSchemeName()
-	{
+	public String getSchemeName() {
 		return schemeName;
 	}
 
-	public void setSchemeName(String schemename)
-	{
+	public void setSchemeName(String schemename) {
 		this.schemeName = schemename;
 	}
 }
