@@ -119,7 +119,7 @@ public class DailyCashPanel extends AbstractPanel
 					java.util.Date date = datePkr.getDate();
 
 					CashHandler handler = new CashHandler();
-					handler.insertCash(date, amount);
+					handler.insertCash(date,amount);
 					displayMessage(true);
 				}
 				catch (Exception e)
