@@ -26,7 +26,8 @@ import database.SchemeHandler;
 import database.TransactionHandler;
 
 @SuppressWarnings("serial")
-public class TransactionPanel extends AbstractPanel {
+public class TransactionPanel extends AbstractPanel
+{
 	private JButton saveBtn = null;
 
 	private JButton refreshtBtn = null;
@@ -51,57 +52,68 @@ public class TransactionPanel extends AbstractPanel {
 
 	private JXDatePicker datePicker = null;
 
-	private JLabel resultMsgLbl;
+	private JLabel resultMsgLbl = null;
 
-	public TransactionPanel() {
+	public TransactionPanel()
+	{
 		addPanels();
 	}
 
-	public GuiPanel getButtonPanel() {
+	public GuiPanel getButtonPanel()
+	{
 		GuiPanel buttonPanel = new GuiPanel();
 
 		saveBtn = new JButton("Save");
-		saveBtn.addActionListener(new ActionListener() {
+		saveBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				try
+				{
 					String rAmtStr = rAmountTxt.getText();
 					String dAmtStr = dAmountTxt.getText();
 					double fee = 0;
 					double receivedAmount = 0;
 					double deliveredAmount = 0;
 
-					if (!Helper.isEmpty(feeTxt.getText())) {
+					if (!Helper.isEmpty(feeTxt.getText()))
+					{
 						fee = Helper.objectToDouble(feeTxt.getText().trim());
 					}
-					if (!Helper.isEmpty(rAmtStr)) {
+					if (!Helper.isEmpty(rAmtStr))
+					{
 						receivedAmount = Helper.objectToDouble(rAmtStr.trim());
 					}
-					if (!Helper.isEmpty(dAmtStr)) {
+					if (!Helper.isEmpty(dAmtStr))
+					{
 						deliveredAmount = Helper.objectToDouble(dAmtStr.trim());
 					}
-					if (receivedAmount > 0 && deliveredAmount > 0) {
-						throw new Exception(
-								"Received amount and Deliverd amount both cannot be non zero");
+					if (receivedAmount > 0 && deliveredAmount > 0)
+					{
+						throw new Exception("Received amount and Deliverd amount both cannot be non zero");
 					}
 
 					String sName = schemeNamecbx.getSelectedItem().toString();
 					java.util.Date date = datePicker.getDate();
 
 					TransactionHandler transactionhandler = new TransactionHandler();
-					transactionhandler.saveTransaction(receivedAmount,
-							deliveredAmount, fee, date, sName);
+					transactionhandler.saveTransaction(receivedAmount, deliveredAmount, fee, date, sName);
 					clearTextFields();
 					displayMessage(true);
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					new MessageDialog("Error", e.getMessage());
 				}
 			}
 		});
 		refreshtBtn = new JButton("Refresh");
-		refreshtBtn.addActionListener(new ActionListener() {
+		refreshtBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				populateSchemeNamesCbx();
 			}
 		});
@@ -112,7 +124,8 @@ public class TransactionPanel extends AbstractPanel {
 		return buttonPanel;
 	}
 
-	public GuiPanel getCenterPanel() {
+	public GuiPanel getCenterPanel()
+	{
 		GuiPanel centerPanel = new GuiPanel();
 
 		rAmountLbl = new JLabel("Received Amount");
@@ -174,30 +187,40 @@ public class TransactionPanel extends AbstractPanel {
 		return centerPanel;
 	}
 
-	public GuiPanel getBannerPanel() {
+	public GuiPanel getBannerPanel()
+	{
 		GuiPanel bannerPanel = new GuiPanel();
 		bannerPanel.add(new JLabel("Transaction"), BorderLayout.CENTER);
 
 		return bannerPanel;
 	}
 
-	public void createAndShowGUI() {
+	public void createAndShowGUI()
+	{
 
 	}
 
-	private void displayMessage(final boolean success) {
-		Thread t = new Thread() {
-			public void run() {
-				try {
-					if (success) {
+	private void displayMessage(final boolean success)
+	{
+		Thread t = new Thread()
+		{
+			public void run()
+			{
+				try
+				{
+					if (success)
+					{
 						resultMsgLbl.setText("Transaction saved");
-					} else {
-						resultMsgLbl
-								.setText("Sorry! Transaction unsuccessfull");
+					}
+					else
+					{
+						resultMsgLbl.setText("Sorry! Transaction unsuccessfull");
 					}
 					Thread.sleep(2000);
 					resultMsgLbl.setText(null);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+				{
 					new MessageDialog("Error", e.getMessage());
 					e.printStackTrace();
 				}
@@ -206,35 +229,41 @@ public class TransactionPanel extends AbstractPanel {
 		t.start();
 	}
 
-	private void populateSchemeNamesCbx() {
-		if (schemeNamecbx == null) {
+	private void populateSchemeNamesCbx()
+	{
+		if (schemeNamecbx == null)
+		{
 			schemeNamecbx = new JComboBox<String>();
 		}
 		SchemeHandler handler = new SchemeHandler();
 		Vector<String> schemeNames = null;
-		try {
+		try
+		{
 			schemeNames = handler.getSchemeNames();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			new MessageDialog("Error", e.getMessage());
 		}
-		if (schemeNames == null) {
-			schemeNamecbx
-					.setModel(new javax.swing.DefaultComboBoxModel<String>());
-		} else {
-			schemeNamecbx
-					.setModel(new javax.swing.DefaultComboBoxModel<String>(
-							schemeNames));
+		if (schemeNames == null)
+		{
+			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>());
+		}
+		else
+		{
+			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>(schemeNames));
 		}
 	}
 
-	private void clearTextFields() {
+	private void clearTextFields()
+	{
 		rAmountTxt.setText(null);
 		dAmountTxt.setText(null);
 		feeTxt.setText(null);
 	}
 
-	private void setGridBagConstraints(GridBagConstraints c, int gridx,
-			int gridy, int placement, int paddingTop, int paddingLeft) {
+	private void setGridBagConstraints(GridBagConstraints c, int gridx, int gridy, int placement, int paddingTop, int paddingLeft)
+	{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = placement;
 		c.insets = new Insets(paddingTop, paddingLeft, 0, 0); // top and left

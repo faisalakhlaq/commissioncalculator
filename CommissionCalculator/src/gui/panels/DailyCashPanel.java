@@ -28,11 +28,15 @@ public class DailyCashPanel extends AbstractPanel
 
 	private JLabel dateLbl = null;
 
+	private JLabel resultMsgLbl = null;
+
 	private JTextField cashTxt = null;
 
 	private JXDatePicker datePkr = null;
 
 	private JButton saveBtn = null;
+
+	private JButton updateBtn = null;
 
 	private JButton exitBtn = null;
 
@@ -48,6 +52,7 @@ public class DailyCashPanel extends AbstractPanel
 
 		cashLbl = new JLabel("Cash Available");
 		dateLbl = new JLabel("Date");
+		resultMsgLbl = new JLabel();
 
 		cashTxt = new JTextField(15);
 		datePkr = new JXDatePicker();
@@ -69,6 +74,10 @@ public class DailyCashPanel extends AbstractPanel
 		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(datePkr, c);
 
+		setGridBagConstraints(c, 0, 2, GridBagConstraints.LINE_START, 10, 0);
+		c.gridwidth = 2;
+		centerPanel.add(resultMsgLbl, c);
+
 		return centerPanel;
 	}
 
@@ -76,7 +85,28 @@ public class DailyCashPanel extends AbstractPanel
 	public GuiPanel getButtonPanel()
 	{
 		GuiPanel buttonPanel = new GuiPanel();
+		updateBtn = new JButton("Update");
+		updateBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				try
+				{
+					int amount = Helper.stringToInt(cashTxt.getText());
+					java.util.Date date = datePkr.getDate();
 
+					CashHandler handler = new CashHandler();
+					handler.updateCash(date, amount);
+					displayMessage(true);
+				}
+				catch (Exception e)
+				{
+					new MessageDialog("Error While Updating Cash", e.getMessage());
+				}
+
+			}
+		});
 		saveBtn = new JButton("Save");
 		saveBtn.addActionListener(new ActionListener()
 		{
@@ -90,10 +120,11 @@ public class DailyCashPanel extends AbstractPanel
 
 					CashHandler handler = new CashHandler();
 					handler.insertCash(date, amount);
+					displayMessage(true);
 				}
 				catch (Exception e)
 				{
-					new MessageDialog("Error", e.getMessage());
+					new MessageDialog("Error While inserting cash", e.getMessage());
 				}
 			}
 		});
@@ -109,6 +140,7 @@ public class DailyCashPanel extends AbstractPanel
 		});
 
 		buttonPanel.add(saveBtn);
+		buttonPanel.add(updateBtn);
 		buttonPanel.add(exitBtn);
 
 		return buttonPanel;
@@ -134,5 +166,34 @@ public class DailyCashPanel extends AbstractPanel
 		c.gridx = gridx;
 		c.gridy = gridy;
 		c.gridwidth = 1;
+	}
+
+	private void displayMessage(final boolean success)
+	{
+		Thread t = new Thread()
+		{
+			public void run()
+			{
+				try
+				{
+					if (success)
+					{
+						resultMsgLbl.setText("Transaction saved");
+					}
+					else
+					{
+						resultMsgLbl.setText("Sorry! Transaction unsuccessfull");
+					}
+					Thread.sleep(2000);
+					resultMsgLbl.setText(null);
+				}
+				catch (InterruptedException e)
+				{
+					new MessageDialog("Error", e.getMessage());
+					e.printStackTrace();
+				}
+			}
+		};
+		t.start();
 	}
 }
