@@ -4,6 +4,7 @@ import gui.dailogue.MessageDialog;
 import gui.panels.DailyCashPanel;
 import gui.panels.DailyCashReportPanel;
 import gui.panels.DesktopTabbedPane;
+import gui.panels.DisplayAllDailyCashPanel;
 import gui.panels.DisplayAllSchemesPanel;
 import gui.panels.EditSchemeNamePanel;
 
@@ -15,7 +16,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import model.DailyCash;
 import model.Scheme;
+import database.CashHandler;
 import database.SchemeHandler;
 
 @SuppressWarnings("serial")
@@ -40,6 +43,62 @@ public class MainViewMenuBar extends JMenuBar
 		addFileMenu();
 		addTransactionMenu();
 		addSchemeMenu();
+		addReportMenu();
+	}
+
+	private void addReportMenu()
+	{
+		JMenu report = new JMenu("Reports");
+		this.add(report);
+
+		JMenuItem dailyCashHistory = new JMenuItem("View Cash History");
+		report.add(dailyCashHistory);
+
+		dailyCashHistory.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				try
+				{
+					DesktopTabbedPane pane = DesktopTabbedPane.getInstance();
+					CashHandler handler = new CashHandler();
+					Vector<DailyCash> list;
+					list = handler.getAllCash();
+					DisplayAllDailyCashPanel p = new DisplayAllDailyCashPanel(list);
+					pane.addPanel("Cash History", p);
+				}
+				catch (Exception e)
+				{
+					new MessageDialog("Error", e.getMessage());
+				}
+			}
+		});
+
+		JMenuItem transactionReport = new JMenuItem("Transaction Report");
+		report.add(transactionReport);
+		transactionReport.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
+				desktopPane.showPanel("TRANSACTION_REPORT");
+			}
+		});
+
+		JMenuItem dailyCashReport = new JMenuItem("Daily Cash Report");
+		report.add(dailyCashReport);
+		dailyCashReport.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				DailyCashReportPanel cashPanel = new DailyCashReportPanel();
+				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
+				desktopPane.addPanel("Daily Cash Report", cashPanel);
+			}
+		});
 	}
 
 	private void addFileMenu()
@@ -146,17 +205,6 @@ public class MainViewMenuBar extends JMenuBar
 			}
 		});
 
-		JMenuItem transactionReport = new JMenuItem("Transaction Report");
-		transactionMenu.add(transactionReport);
-		transactionReport.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-				desktopPane.showPanel("TRANSACTION_REPORT");
-			}
-		});
 		JMenuItem dailyCash = new JMenuItem("Insert Daily Cash");
 		transactionMenu.add(dailyCash);
 		dailyCash.addActionListener(new ActionListener()
@@ -169,17 +217,6 @@ public class MainViewMenuBar extends JMenuBar
 				desktopPane.addPanel("Daily Cash", cashPanel);
 			}
 		});
-		JMenuItem dailyCashReport = new JMenuItem("View Cash Report");
-		transactionMenu.add(dailyCashReport);
-		dailyCashReport.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				DailyCashReportPanel cashPanel = new DailyCashReportPanel();
-				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-				desktopPane.addPanel("Daily Cash Report", cashPanel);
-			}
-		});
+
 	}
 }

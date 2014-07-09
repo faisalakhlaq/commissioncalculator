@@ -1,6 +1,6 @@
 package model;
 
-public class Scheme
+public class Scheme implements ModelObject
 {
 	private String companyName;
 
