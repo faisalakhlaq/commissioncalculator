@@ -22,23 +22,30 @@ import table.SchemeTableModel;
 import table.SchemeTableModelListener;
 
 @SuppressWarnings("serial")
-public class DisplayAllSchemesPanel extends AbstractPanel
-{
+public class DisplayAllSchemesPanel extends AbstractPanel {
+	private static DisplayAllSchemesPanel instance = null;
+
 	private JButton exitBtn = null;
 
-	private Vector<Scheme> schemeList;
+	private static Vector<Scheme> schemeList;
 
-	private String[] columnNames =
-	{ "Scheme Name ", "Company Name", "1-1000", "1001-2500", "2501-4000", "4001-6000", "6001-8000", "8001-10000", "10001-13000", "13001-15000" };
+	private String[] columnNames = { "Scheme Name ", "Company Name", "1-1000",
+			"1001-2500", "2501-4000", "4001-6000", "6001-8000", "8001-10000",
+			"10001-13000", "13001-15000" };
 
-	public DisplayAllSchemesPanel(Vector<Scheme> schemeList)
-	{
-		this.schemeList = schemeList;
+	public DisplayAllSchemesPanel(Vector<Scheme> schemeList) {
+		DisplayAllSchemesPanel.schemeList = schemeList;
 		addPanels();
 	}
 
-	public void addPanels()
-	{
+	public static DisplayAllSchemesPanel getInstance() {
+		if (instance == null)
+			instance = new DisplayAllSchemesPanel(schemeList);
+
+		return instance;
+	}
+
+	public void addPanels() {
 		GuiPanel bannerPanel = getBannerPanel();
 		GuiPanel centerPanel = getCenterPanel();
 		GuiPanel buttonPanel = getButtonPanel();
@@ -60,20 +67,16 @@ public class DisplayAllSchemesPanel extends AbstractPanel
 		c.gridy = 3;
 		c.gridwidth = 1;
 		add(buttonPanel, c);
-
 	}
 
-	public GuiPanel getButtonPanel()
-	{
+	public GuiPanel getButtonPanel() {
 		GuiPanel buttonPanel = new GuiPanel();
 
 		exitBtn = new JButton("Exit");
-		exitBtn.addActionListener(new ActionListener()
-		{
+		exitBtn.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				DesktopTabbedPane desktop = DesktopTabbedPane.getInstance();
 				desktop.removeTabAt(desktop.getSelectedIndex());
 			}
@@ -82,8 +85,7 @@ public class DisplayAllSchemesPanel extends AbstractPanel
 		return buttonPanel;
 	}
 
-	public GuiPanel getCenterPanel()
-	{
+	public GuiPanel getCenterPanel() {
 		SchemeTableModel model = new SchemeTableModel(schemeList, columnNames);
 		model.addTableModelListener(new SchemeTableModelListener());
 		JTable table = new JTable(model); // NEW
@@ -114,15 +116,13 @@ public class DisplayAllSchemesPanel extends AbstractPanel
 		return p;
 	}
 
-	public GuiPanel getBannerPanel()
-	{
+	public GuiPanel getBannerPanel() {
 		GuiPanel bannerPanel = new GuiPanel();
 		bannerPanel.add(new JLabel("Scheme Information"), BorderLayout.CENTER);
 
 		return bannerPanel;
 	}
 
-	public void createAndShowGUI()
-	{
+	public void createAndShowGUI() {
 	}
 }

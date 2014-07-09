@@ -21,6 +21,9 @@ import database.SchemeHandler;
 
 @SuppressWarnings("serial")
 public class EditSchemeNamePanel extends AbstractPanel {
+
+	private static EditSchemeNamePanel instance = null;
+
 	private JButton saveBtn = null;
 
 	private JButton refreshBtn = null;
@@ -39,6 +42,13 @@ public class EditSchemeNamePanel extends AbstractPanel {
 
 	public EditSchemeNamePanel() {
 		addPanels();
+	}
+
+	public static EditSchemeNamePanel getInstance() {
+		if (instance == null)
+			instance = new EditSchemeNamePanel();
+
+		return instance;
 	}
 
 	@Override
@@ -66,7 +76,8 @@ public class EditSchemeNamePanel extends AbstractPanel {
 		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(newNameTxt, c);
 
-		setGridBagConstraints(c, 1, 1, GridBagConstraints.LINE_END, 10, 10);
+		setGridBagConstraints(c, 0, 2, GridBagConstraints.LINE_END, 10, 10);
+		c.gridwidth = 2;
 		centerPanel.add(resultMsgLbl, c);
 
 		return centerPanel;
@@ -85,12 +96,12 @@ public class EditSchemeNamePanel extends AbstractPanel {
 
 				SchemeHandler handler = new SchemeHandler();
 				try {
-					// TODO when scheme name is updated that name should be
-					// updated in the transaction table as well
 					handler.updateSchemeName(oldName, newName);
 					clearTextFields();
 					populateSchemeNamesCbx();
 					displayMessage(true);
+					DesktopTabbedPane pane = DesktopTabbedPane.getInstance();
+					pane.refreshPanels();
 				} catch (Exception e) {
 					new MessageDialog("Error", e.getMessage());
 				}

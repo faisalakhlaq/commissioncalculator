@@ -23,11 +23,13 @@ import table.TransactionTableModelListener;
 @SuppressWarnings("serial")
 public class DisplayAllDailyCashPanel extends AbstractPanel
 {
+	private static DisplayAllDailyCashPanel instance = null;
+	
 	private JButton exitbtn = null;
 
 	private JTable table = new JTable();
 
-	private Vector<DailyCash> dailyCashList = null;
+	private static Vector<DailyCash> dailyCashList = null;
 
 	private String[] columnNames =
 	{ "Date", "Amount" };
@@ -36,6 +38,12 @@ public class DisplayAllDailyCashPanel extends AbstractPanel
 	{
 		if (list != null) dailyCashList = new Vector<DailyCash>(list);
 		addPanels();
+	}
+	public static DisplayAllDailyCashPanel getInstance()
+	{
+		if (instance == null) instance = new DisplayAllDailyCashPanel(dailyCashList);
+
+		return instance;
 	}
 
 	@Override
