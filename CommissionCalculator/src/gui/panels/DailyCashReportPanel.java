@@ -1,7 +1,6 @@
 package gui.panels;
 
 import gui.AbstractPanel;
-import gui.CommissionCalcToolBar;
 import gui.GuiPanel;
 import gui.dailogue.MessageDialog;
 
