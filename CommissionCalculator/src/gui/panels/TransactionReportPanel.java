@@ -48,9 +48,17 @@ public class TransactionReportPanel extends AbstractPanel {
 	private JXDatePicker toDatePicker = null;
 
 	private JComboBox<String> schemeNamecbx = null;
+	private static TransactionReportPanel instance = null;
 
-	public TransactionReportPanel() {
+	private TransactionReportPanel() {
 		addPanels();
+	}
+
+	public static TransactionReportPanel getInstance() {
+		if (instance == null)
+			instance = new TransactionReportPanel();
+
+		return instance;
 	}
 
 	public GuiPanel getButtonPanel() {
@@ -174,7 +182,7 @@ public class TransactionReportPanel extends AbstractPanel {
 		return bannerPanel;
 	}
 
-	private void populateSchemeNamesCbx() {
+	public void populateSchemeNamesCbx() {
 		if (schemeNamecbx == null) {
 			schemeNamecbx = new JComboBox<String>();
 		}

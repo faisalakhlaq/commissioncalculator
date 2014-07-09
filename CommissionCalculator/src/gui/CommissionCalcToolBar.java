@@ -4,6 +4,7 @@ import gui.dailogue.MessageDialog;
 import gui.panels.DailyCashPanel;
 import gui.panels.DailyCashReportPanel;
 import gui.panels.DesktopTabbedPane;
+import gui.panels.DisplayAllDailyCashPanel;
 import gui.panels.DisplayAllSchemesPanel;
 import gui.panels.EditSchemeNamePanel;
 
@@ -16,14 +17,16 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.JToolTip;
 
+import model.DailyCash;
 import model.Scheme;
+import database.CashHandler;
 import database.SchemeHandler;
 
 @SuppressWarnings("serial")
 public class CommissionCalcToolBar extends JToolBar {
 	private static CommissionCalcToolBar instance = null;
 
-	private CommissionCalcToolBar() {
+	CommissionCalcToolBar() {
 		setFloatable(true);
 		addButtons();
 	}
@@ -45,13 +48,39 @@ public class CommissionCalcToolBar extends JToolBar {
 		addViewCashReportBtn();
 		addEditSchemeBtn();
 		addDisplayAllSchemeBtn();
+		addViewDailyHistryBtn();
+	}
 
+	private void addViewDailyHistryBtn() {
+		JButton viewDailyReportBtn = new JButton();
+		JToolTip toolTip = new JToolTip();
+		toolTip.setTipText("View Daily Cash History");
+		viewDailyReportBtn.setToolTipText(toolTip.getTipText());
+		viewDailyReportBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					DesktopTabbedPane pane = DesktopTabbedPane.getInstance();
+					CashHandler handler = new CashHandler();
+					Vector<DailyCash> list;
+					list = handler.getAllCash();
+					new DisplayAllDailyCashPanel(list);
+					DisplayAllDailyCashPanel p = DisplayAllDailyCashPanel
+							.getInstance();
+					pane.addPanel("Cash History", p);
+				} catch (Exception e) {
+					new MessageDialog("Error", e.getMessage());
+				}
+			}
+		});
+		add(viewDailyReportBtn);
+		setIcon(viewDailyReportBtn, "/resources/Cash_History.png");
 	}
 
 	private void addDisplayAllSchemeBtn() {
 		JButton displayAllSchemeBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
-		toolTip.setTipText("Display ALL Scheme");
+		toolTip.setTipText("Display All Scheme");
 		displayAllSchemeBtn.setToolTipText(toolTip.getTipText());
 		displayAllSchemeBtn.addActionListener(new ActionListener() {
 			@Override
@@ -61,8 +90,9 @@ public class CommissionCalcToolBar extends JToolBar {
 				try {
 					Vector<Scheme> schemeList = handler.getAllSchemes();
 					if (schemeList != null && schemeList.size() > 0) {
-						DisplayAllSchemesPanel p = new DisplayAllSchemesPanel(
-								schemeList);
+						new DisplayAllSchemesPanel(schemeList);
+						DisplayAllSchemesPanel p = DisplayAllSchemesPanel
+								.getInstance();
 						desktopPane.addPanel("Schemes", p);
 					}
 				} catch (Exception e) {
@@ -71,8 +101,7 @@ public class CommissionCalcToolBar extends JToolBar {
 			}
 		});
 		add(displayAllSchemeBtn);
-		setIcon(displayAllSchemeBtn, "/resources/print.png");
-
+		setIcon(displayAllSchemeBtn, "/resources/All_Scheme.png");
 	}
 
 	private void addEditSchemeBtn() {
@@ -84,13 +113,12 @@ public class CommissionCalcToolBar extends JToolBar {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-				EditSchemeNamePanel p = new EditSchemeNamePanel();
-				desktopPane.addPanel("EditSchemePanel", p);
+				EditSchemeNamePanel p = EditSchemeNamePanel.getInstance();
+				desktopPane.addPanel("Edit Scheme Name", p);
 			}
 		});
 		add(EditSchemeBtn);
-		setIcon(EditSchemeBtn, "/resources/search.png");
-
+		setIcon(EditSchemeBtn, "/resources/Edit_scheme.png");
 	}
 
 	private void addViewCashReportBtn() {
@@ -102,31 +130,29 @@ public class CommissionCalcToolBar extends JToolBar {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-				DailyCashReportPanel p = new DailyCashReportPanel();
-				desktopPane.addPanel("DailyCashPanel", p);
+				DailyCashReportPanel p = DailyCashReportPanel.getInstance();
+				desktopPane.addPanel("Daily Cash Report", p);
 			}
 		});
 		add(ViewCashReportBtn);
-		setIcon(ViewCashReportBtn, "/resources/area_code.png");
-
+		setIcon(ViewCashReportBtn, "/resources/view-icon.png");
 	}
 
 	private void addDailyCashBtn() {
 		JButton dailyCashBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
-		toolTip.setTipText("Daily Cash");
+		toolTip.setTipText("Insert Daily Cash");
 		dailyCashBtn.setToolTipText(toolTip.getTipText());
 		dailyCashBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-				DailyCashPanel p = new DailyCashPanel();
-				desktopPane.addPanel("DailyCashPanel", p);
+				DailyCashPanel p = DailyCashPanel.getInstance();
+				desktopPane.addPanel("Daily Cash", p);
 			}
 		});
 		add(dailyCashBtn);
-		setIcon(dailyCashBtn, "/resources/generate_bill.png");
-
+		setIcon(dailyCashBtn, "/resources/Money_icon.png");
 	}
 
 	private void addTransactioReportBtn() {
@@ -142,8 +168,7 @@ public class CommissionCalcToolBar extends JToolBar {
 			}
 		});
 		add(trReportBtn);
-		setIcon(trReportBtn, "/resources/calc.png");
-
+		setIcon(trReportBtn, "/resources/report_icon.png");
 	}
 
 	private void addDeleteSchemeBtn() {
@@ -207,7 +232,7 @@ public class CommissionCalcToolBar extends JToolBar {
 			}
 		});
 		add(trBtn);
-		setIcon(trBtn, "/resources/exit_icon.png");
+		setIcon(trBtn, "/resources/exit-icon.png");
 	}
 
 	private void setIcon(JButton btn, String iconUrl) {

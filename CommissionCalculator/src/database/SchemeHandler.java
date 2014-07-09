@@ -329,6 +329,9 @@ public class SchemeHandler {
 			throw new Exception("Unable to get the connection to the database");
 		}
 		try {
+			// If one of the tables is not having the provided scheme_name then
+			// the query wont effect. Therefore, we have to execute query
+			// separately for the scheme table
 			stmt = (PreparedStatement) conn
 					.prepareStatement("UPDATE scheme, transaction SET scheme.scheme_name = ?, transaction.scheme_name = ? where SCHEME.scheme_name = '"
 							+ oldName
@@ -340,6 +343,10 @@ public class SchemeHandler {
 
 			System.out.println("Executing query: " + stmt.getPreparedSql());
 			stmt.executeUpdate();
+
+			Statement st = conn.createStatement();
+			st.execute("Update scheme set scheme_name = '" + newName
+					+ "' where scheme_name = '" + oldName + "';");
 		} catch (SQLException e1) {
 			Logger.getGlobal().severe(
 					"Error occured while updateing the scheme name: "

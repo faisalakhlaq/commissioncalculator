@@ -1,6 +1,7 @@
 package gui.panels;
 
 import gui.AbstractPanel;
+import gui.CommissionCalcToolBar;
 import gui.GuiPanel;
 import gui.dailogue.MessageDialog;
 
@@ -24,6 +25,8 @@ import database.TransactionHandler;
 
 @SuppressWarnings("serial")
 public class DailyCashReportPanel extends AbstractPanel {
+	private static DailyCashReportPanel instance = null;
+	
 	private JTextField cashTxt = null;
 
 	private JXDatePicker datePkr = null;
@@ -45,6 +48,12 @@ public class DailyCashReportPanel extends AbstractPanel {
 		retrieveData();
 	}
 
+	public static DailyCashReportPanel getInstance() {
+		if (instance == null)
+			instance = new DailyCashReportPanel();
+
+		return instance;
+	}
 	@Override
 	public GuiPanel getCenterPanel() {
 		GuiPanel centerPanel = new GuiPanel();

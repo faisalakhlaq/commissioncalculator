@@ -37,9 +37,9 @@ public class TransactionTableModel extends AbstractTableModel {
 	}
 
 	public boolean isCellEditable(int row, int col) {
-		if (col == 0 || col == 4)
+		if (col == 0 || col == 4) {
 			return false;
-
+		}
 		return true;
 	}
 

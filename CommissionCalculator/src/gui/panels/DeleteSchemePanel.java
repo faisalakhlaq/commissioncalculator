@@ -19,8 +19,7 @@ import javax.swing.JLabel;
 import database.SchemeHandler;
 
 @SuppressWarnings("serial")
-public class DeleteSchemePanel extends AbstractPanel
-{
+public class DeleteSchemePanel extends AbstractPanel {
 
 	private JButton deleteBtn = null;
 
@@ -30,23 +29,27 @@ public class DeleteSchemePanel extends AbstractPanel
 
 	private JComboBox<String> schemeNameCbx = null;
 
-	private JLabel resultMsgLbl;
+	private JLabel resultMsgLbl = null;
+	private static DeleteSchemePanel instance = null;
 
-	public DeleteSchemePanel()
-	{
+	private DeleteSchemePanel() {
 		addPanels();
 	}
 
-	public GuiPanel getButtonPanel()
-	{
+	public static DeleteSchemePanel getInstance() {
+		if (instance == null)
+			instance = new DeleteSchemePanel();
+
+		return instance;
+	}
+
+	public GuiPanel getButtonPanel() {
 		GuiPanel buttonPanel = new GuiPanel();
 
 		deleteBtn = new JButton("DELETE");
-		deleteBtn.addActionListener(new ActionListener()
-		{
+		deleteBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 
 				String sachemeName = schemeNameCbx.getSelectedItem().toString();
 				SchemeHandler schemehandler = new SchemeHandler();
@@ -57,12 +60,10 @@ public class DeleteSchemePanel extends AbstractPanel
 		});
 
 		refreshBtn = new JButton("Refresh");
-		refreshBtn.addActionListener(new ActionListener()
-		{
+		refreshBtn.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				populateSchemeNamesCbx();
 			}
 		});
@@ -73,8 +74,7 @@ public class DeleteSchemePanel extends AbstractPanel
 		return buttonPanel;
 	}
 
-	public GuiPanel getCenterPanel()
-	{
+	public GuiPanel getCenterPanel() {
 		GuiPanel centerPanel = new GuiPanel();
 
 		schemeName = new JLabel("Scheme Name: ");
@@ -100,20 +100,19 @@ public class DeleteSchemePanel extends AbstractPanel
 		centerPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
-
 		setGridBagConstraints(c, 0, 0, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(schemeName, c);
 
 		setGridBagConstraints(c, 1, 0, GridBagConstraints.LINE_END, 10, 10);
 		centerPanel.add(schemeNameCbx, c);
-		
+
 		setGridBagConstraints(c, 0, 1, GridBagConstraints.LINE_START, 10, 0);
 		centerPanel.add(resultMsgLbl, c);
 		return centerPanel;
 	}
 
-	private void setGridBagConstraints(GridBagConstraints c, int gridx, int gridy, int placement, int paddingTop, int paddingLeft)
-	{
+	private void setGridBagConstraints(GridBagConstraints c, int gridx,
+			int gridy, int placement, int paddingTop, int paddingLeft) {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = placement;
 		c.insets = new Insets(paddingTop, paddingLeft, 0, 0); // top and left
@@ -124,43 +123,30 @@ public class DeleteSchemePanel extends AbstractPanel
 		c.gridy = gridy;
 		c.gridwidth = 1;
 	}
-		
-	
 
-	public GuiPanel getBannerPanel()
-	{
+	public GuiPanel getBannerPanel() {
 		GuiPanel bannerPanel = new GuiPanel();
 		bannerPanel.add(new JLabel("Delete Scheme"), BorderLayout.CENTER);
 		return bannerPanel;
 	}
 
-	public void createAndShowGUI()
-	{
+	public void createAndShowGUI() {
 
 	}
 
-	private void displayMessage(final boolean success)
-	{
-		Thread t = new Thread()
-		{
-			public void run()
-			{
-				try
-				{
+	private void displayMessage(final boolean success) {
+		Thread t = new Thread() {
+			public void run() {
+				try {
 
-					if (success)
-					{
+					if (success) {
 						resultMsgLbl.setText("Scheme Deleted");
-					}
-					else
-					{
+					} else {
 						resultMsgLbl.setText("Sorry! deleted unsuccessfull");
 					}
 					Thread.sleep(2000);
 					resultMsgLbl.setText(null);
-				}
-				catch (InterruptedException e)
-				{
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
@@ -168,29 +154,24 @@ public class DeleteSchemePanel extends AbstractPanel
 		t.start();
 	}
 
-	private void populateSchemeNamesCbx()
-	{
-		if (schemeNameCbx == null)
-		{
+	public void populateSchemeNamesCbx() {
+		if (schemeNameCbx == null) {
 			schemeNameCbx = new JComboBox<String>();
 		}
 		SchemeHandler handler = new SchemeHandler();
 		Vector<String> schemeNames = null;
-		try
-		{
+		try {
 			schemeNames = handler.getSchemeNames();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			new MessageDialog("Error", e.getMessage());
 		}
-		if (schemeNames == null)
-		{
-			schemeNameCbx.setModel(new javax.swing.DefaultComboBoxModel<String>());
-		}
-		else
-		{
-			schemeNameCbx.setModel(new javax.swing.DefaultComboBoxModel<String>(schemeNames));
+		if (schemeNames == null) {
+			schemeNameCbx
+					.setModel(new javax.swing.DefaultComboBoxModel<String>());
+		} else {
+			schemeNameCbx
+					.setModel(new javax.swing.DefaultComboBoxModel<String>(
+							schemeNames));
 		}
 	}
 }

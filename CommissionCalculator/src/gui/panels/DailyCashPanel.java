@@ -1,6 +1,7 @@
 package gui.panels;
 
 import gui.AbstractPanel;
+import gui.CommissionCalcToolBar;
 import gui.GuiPanel;
 import gui.dailogue.MessageDialog;
 
@@ -24,6 +25,8 @@ import database.CashHandler;
 @SuppressWarnings("serial")
 public class DailyCashPanel extends AbstractPanel
 {
+	private static DailyCashPanel instance = null;
+	
 	private JLabel cashLbl = null;
 
 	private JLabel dateLbl = null;
@@ -43,6 +46,12 @@ public class DailyCashPanel extends AbstractPanel
 	public DailyCashPanel()
 	{
 		addPanels();
+	}
+	public static DailyCashPanel getInstance() {
+		if (instance == null)
+			instance = new DailyCashPanel();
+
+		return instance;
 	}
 
 	@Override
