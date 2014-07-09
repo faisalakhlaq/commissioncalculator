@@ -1,6 +1,7 @@
 package gui.menus;
 
 import gui.dailogue.MessageDialog;
+import gui.dailogue.SystemAboutDialog;
 import gui.panels.DailyCashPanel;
 import gui.panels.DailyCashReportPanel;
 import gui.panels.DesktopTabbedPane;
@@ -12,9 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.border.EtchedBorder;
 
 import model.DailyCash;
 import model.Scheme;
@@ -28,6 +31,7 @@ public class MainViewMenuBar extends JMenuBar
 
 	private MainViewMenuBar()
 	{
+		this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		addMenuBarItems();
 	}
 
@@ -44,6 +48,25 @@ public class MainViewMenuBar extends JMenuBar
 		addTransactionMenu();
 		addSchemeMenu();
 		addReportMenu();
+		addHelpMenu();
+	}
+
+	private void addHelpMenu()
+	{
+		JMenu help = new JMenu("Help");
+		this.add(help);
+
+		JMenuItem about = new JMenuItem("About");
+		help.add(about);
+
+		about.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				new SystemAboutDialog();
+			}
+		});
 	}
 
 	private void addReportMenu()
