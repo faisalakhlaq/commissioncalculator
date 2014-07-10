@@ -19,7 +19,8 @@ import utils.Helper;
 import database.SchemeHandler;
 
 @SuppressWarnings("serial")
-public class CreateSchemePanel extends AbstractPanel {
+public class CreateSchemePanel extends AbstractPanel
+{
 	private JButton saveBtn = null;
 
 	private JButton clearBtn = null;
@@ -36,37 +37,45 @@ public class CreateSchemePanel extends AbstractPanel {
 
 	private JTextField[] amountTxt = new JTextField[10];
 
-	public CreateSchemePanel() {
+	public CreateSchemePanel()
+	{
 		addPanels();
 	}
 
-	public GuiPanel getButtonPanel() {
+	public GuiPanel getButtonPanel()
+	{
 		GuiPanel buttonPanel = new GuiPanel();
 		saveBtn = new JButton("Save");
-		saveBtn.addActionListener(new ActionListener() {
+		saveBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				String sName = schemeTxt.getText();
 				String cName = companyTxt.getText();
 				SchemeHandler handler = new SchemeHandler();
-				try {
+				try
+				{
 					double[] profit = getProfitAmount();
-					handler.createScheme(sName, cName, profit[0], profit[1],
-							profit[2], profit[3], profit[4], profit[5],
-							profit[6], profit[7]);
+					handler.createScheme(sName, cName, profit[0], profit[1], profit[2], profit[3], profit[4], profit[5], profit[6], profit[7]);
 					displayMessage(true);
 					clearTextFields();
-				} catch (Exception e) {
+					DesktopTabbedPane pane = DesktopTabbedPane.getInstance();
+					pane.refreshPanels();
+				}
+				catch (Exception e)
+				{
 					displayMessage(false);
-					JOptionPane.showMessageDialog(null, e.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		clearBtn = new JButton("Clear");
-		clearBtn.addActionListener(new ActionListener() {
+		clearBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				clearTextFields();
 			}
 		});
@@ -76,26 +85,33 @@ public class CreateSchemePanel extends AbstractPanel {
 		return buttonPanel;
 	}
 
-	private double[] getProfitAmount() throws Exception {
+	private double[] getProfitAmount() throws Exception
+	{
 		double[] profit = new double[8];
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 8; i++)
+		{
 			String amount = amountTxt[i].getText();
-			if (!Helper.isEmpty(amount) && Helper.isDigit(amount)) {
+			if (!Helper.isEmpty(amount) && Helper.isDigit(amount))
+			{
 				profit[i] = stringToDouble(amount);
-			} else {
+			}
+			else
+			{
 				throw new Exception("Amount cannot be empty or non numeric");
 			}
 		}
 		return profit;
 	}
 
-	private double stringToDouble(String st) {
+	private double stringToDouble(String st)
+	{
 		double result = 0;
 		result = Double.valueOf(st.trim());
 		return result;
 	}
 
-	public GuiPanel getCenterPanel() {
+	public GuiPanel getCenterPanel()
+	{
 		GuiPanel centerPanel = new GuiPanel();
 
 		schemeNameLbl = new JLabel("Scheme Name");
@@ -192,29 +208,40 @@ public class CreateSchemePanel extends AbstractPanel {
 		return centerPanel;
 	}
 
-	public GuiPanel getBannerPanel() {
+	public GuiPanel getBannerPanel()
+	{
 		GuiPanel bannerPanel = new GuiPanel();
 		bannerPanel.add(new JLabel("Create Scheme"), BorderLayout.CENTER);
 		return bannerPanel;
 	}
 
-	public void createAndShowGUI() {
+	public void createAndShowGUI()
+	{
 
 	}
 
-	private void displayMessage(final boolean success) {
-		Thread t = new Thread() {
-			public void run() {
-				try {
+	private void displayMessage(final boolean success)
+	{
+		Thread t = new Thread()
+		{
+			public void run()
+			{
+				try
+				{
 
-					if (success) {
+					if (success)
+					{
 						resultMsgLbl.setText("Scheme Created Successfully");
-					} else {
+					}
+					else
+					{
 						resultMsgLbl.setText("Sorry! create unsuccessful");
 					}
 					Thread.sleep(2000);
 					resultMsgLbl.setText(null);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+				{
 					e.printStackTrace();
 				}
 			}
@@ -222,7 +249,8 @@ public class CreateSchemePanel extends AbstractPanel {
 		t.start();
 	}
 
-	private void clearTextFields() {
+	private void clearTextFields()
+	{
 		schemeTxt.setText(null);
 		companyTxt.setText(null);
 		amountTxt[0].setText(null);
@@ -235,8 +263,8 @@ public class CreateSchemePanel extends AbstractPanel {
 		amountTxt[7].setText(null);
 	}
 
-	private void setGridBagConstraints(GridBagConstraints c, int gridx,
-			int gridy, int placement, int paddingTop, int paddingLeft) {
+	private void setGridBagConstraints(GridBagConstraints c, int gridx, int gridy, int placement, int paddingTop, int paddingLeft)
+	{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = placement;
 		c.insets = new Insets(paddingTop, paddingLeft, 0, 0); // top and left

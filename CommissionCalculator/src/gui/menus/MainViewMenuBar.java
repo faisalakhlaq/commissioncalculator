@@ -88,8 +88,7 @@ public class MainViewMenuBar extends JMenuBar
 					CashHandler handler = new CashHandler();
 					Vector<DailyCash> list;
 					list = handler.getAllCash();
-					new DisplayAllDailyCashPanel(list);
-					DisplayAllDailyCashPanel p = DisplayAllDailyCashPanel.getInstance();
+					DisplayAllDailyCashPanel p = new DisplayAllDailyCashPanel(list);
 					pane.addPanel("Cash History", p);
 				}
 				catch (Exception e)
@@ -118,7 +117,7 @@ public class MainViewMenuBar extends JMenuBar
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				DailyCashReportPanel cashPanel = DailyCashReportPanel.getInstance();
+				DailyCashReportPanel cashPanel = new DailyCashReportPanel();
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 				desktopPane.addPanel("Daily Cash Report", cashPanel);
 			}
@@ -199,8 +198,7 @@ public class MainViewMenuBar extends JMenuBar
 					Vector<Scheme> schemeList = handler.getAllSchemes();
 					if (schemeList != null && schemeList.size() > 0)
 					{
-						new DisplayAllSchemesPanel(schemeList);
-						DisplayAllSchemesPanel p = DisplayAllSchemesPanel.getInstance();
+						DisplayAllSchemesPanel p = new DisplayAllSchemesPanel(schemeList);
 						desktopPane.addPanel("Schemes", p);
 					}
 				}

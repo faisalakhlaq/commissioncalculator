@@ -23,9 +23,8 @@ import database.CashHandler;
 import database.TransactionHandler;
 
 @SuppressWarnings("serial")
-public class DailyCashReportPanel extends AbstractPanel {
-	private static DailyCashReportPanel instance = null;
-	
+public class DailyCashReportPanel extends AbstractPanel
+{
 	private JTextField cashTxt = null;
 
 	private JXDatePicker datePkr = null;
@@ -42,19 +41,15 @@ public class DailyCashReportPanel extends AbstractPanel {
 
 	private JButton getReportBtn = null;
 
-	public DailyCashReportPanel() {
+	public DailyCashReportPanel()
+	{
 		addPanels();
 		retrieveData();
 	}
 
-	public static DailyCashReportPanel getInstance() {
-		if (instance == null)
-			instance = new DailyCashReportPanel();
-
-		return instance;
-	}
 	@Override
-	public GuiPanel getCenterPanel() {
+	public GuiPanel getCenterPanel()
+	{
 		GuiPanel centerPanel = new GuiPanel();
 
 		JLabel cashLbl = new JLabel("Total Cash");
@@ -116,13 +111,16 @@ public class DailyCashReportPanel extends AbstractPanel {
 	}
 
 	@Override
-	public GuiPanel getButtonPanel() {
+	public GuiPanel getButtonPanel()
+	{
 		GuiPanel buttonPanel = new GuiPanel();
 
 		exitBtn = new JButton("Exit");
-		exitBtn.addActionListener(new ActionListener() {
+		exitBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				DesktopTabbedPane desktop = DesktopTabbedPane.getInstance();
 				desktop.remove(DailyCashReportPanel.this);
 			}
@@ -131,10 +129,12 @@ public class DailyCashReportPanel extends AbstractPanel {
 		getReportBtn = new JButton("Get Report");
 
 		buttonPanel.add(getReportBtn);
-		getReportBtn.addActionListener(new ActionListener() {
+		getReportBtn.addActionListener(new ActionListener()
+		{
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				// TODO Auto-generated method stub
 				retrieveData();
 			}
@@ -145,15 +145,16 @@ public class DailyCashReportPanel extends AbstractPanel {
 	}
 
 	@Override
-	public GuiPanel getBannerPanel() {
+	public GuiPanel getBannerPanel()
+	{
 		GuiPanel p = new GuiPanel();
 
 		p.add(new JLabel("Daily Cash Report"));
 		return p;
 	}
 
-	private void setGridBagConstraints(GridBagConstraints c, int gridx,
-			int gridy, int placement, int paddingTop, int paddingLeft) {
+	private void setGridBagConstraints(GridBagConstraints c, int gridx, int gridy, int placement, int paddingTop, int paddingLeft)
+	{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = placement;
 		c.insets = new Insets(paddingTop, paddingLeft, 0, 0); // top and left
@@ -171,10 +172,12 @@ public class DailyCashReportPanel extends AbstractPanel {
 	 * <p>
 	 * Populate the text fields with the appropriate results
 	 */
-	private void retrieveData() {
+	private void retrieveData()
+	{
 		CashHandler ch = new CashHandler();
 		TransactionHandler handler = new TransactionHandler();
-		try {
+		try
+		{
 			Date d = datePkr.getDate();
 			// get todays total cash
 			double cash = ch.retrieveCash(d);
@@ -194,10 +197,10 @@ public class DailyCashReportPanel extends AbstractPanel {
 			double cashInHand = cash + rAmount + fee - dAmount;
 
 			cashInHandTxt.setText(String.valueOf(cashInHand));
-		} catch (Exception e) {
-			new MessageDialog("Error",
-					"Error occured while calculating the cash: "
-							+ e.getMessage());
+		}
+		catch (Exception e)
+		{
+			new MessageDialog("Error", "Error occured while calculating the cash: " + e.getMessage());
 		}
 	}
 }

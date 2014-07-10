@@ -28,7 +28,8 @@ import database.SchemeHandler;
 import database.TransactionHandler;
 
 @SuppressWarnings("serial")
-public class TransactionReportPanel extends AbstractPanel {
+public class TransactionReportPanel extends AbstractPanel
+{
 	private JButton getReportBtn = null;
 
 	private JButton refreshBtn = null;
@@ -48,62 +49,72 @@ public class TransactionReportPanel extends AbstractPanel {
 	private JXDatePicker toDatePicker = null;
 
 	private JComboBox<String> schemeNamecbx = null;
+
 	private static TransactionReportPanel instance = null;
 
-	private TransactionReportPanel() {
+	private TransactionReportPanel()
+	{
 		addPanels();
 	}
 
-	public static TransactionReportPanel getInstance() {
-		if (instance == null)
-			instance = new TransactionReportPanel();
+	public static TransactionReportPanel getInstance()
+	{
+		if (instance == null) instance = new TransactionReportPanel();
 
 		return instance;
 	}
 
-	public GuiPanel getButtonPanel() {
+	public GuiPanel getButtonPanel()
+	{
 		GuiPanel buttonPanel = new GuiPanel();
 
 		getReportBtn = new JButton("Get Report");
-		getReportBtn.addActionListener(new ActionListener() {
+		getReportBtn.addActionListener(new ActionListener()
+		{
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				java.util.Date fromDate = fromDatePicker.getDate();
 				java.util.Date toDate = toDatePicker.getDate();
 				Vector<Transaction> transactionList = null;
 				TransactionHandler handlr = new TransactionHandler();
 
-				try {
-					if (accordingToScheme.isSelected()) {
-						String schemeName = (String) schemeNamecbx
-								.getSelectedItem();
-						transactionList = handlr.getTransactions(toDate,
-								fromDate, schemeName);
-					} else {
-						transactionList = handlr.getTransactionsByDate(toDate,
-								fromDate);
+				try
+				{
+					if (accordingToScheme.isSelected())
+					{
+						String schemeName = (String) schemeNamecbx.getSelectedItem();
+						transactionList = handlr.getTransactions(toDate, fromDate, schemeName);
 					}
-				} catch (Exception e) {
+					else
+					{
+						transactionList = handlr.getTransactionsByDate(toDate, fromDate);
+					}
+				}
+				catch (Exception e)
+				{
 					new MessageDialog("Error", e.getMessage());
 				}
-				if (transactionList != null && transactionList.size() > 0) {
-					DisplayAllTransactionPanel trPnl = new DisplayAllTransactionPanel(
-							transactionList);
-					DesktopTabbedPane desktopPane = DesktopTabbedPane
-							.getInstance();
+				if (transactionList != null && transactionList.size() > 0)
+				{
+					DisplayAllTransactionPanel trPnl = new DisplayAllTransactionPanel(transactionList);
+					DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 					desktopPane.addPanel("Report", trPnl);
-				} else {
-					new MessageDialog("Sorry", "No Transaction Found",
-							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else
+				{
+					new MessageDialog("Sorry", "No Transaction Found", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
 		refreshBtn = new JButton("Refresh");
-		refreshBtn.addActionListener(new ActionListener() {
+		refreshBtn.addActionListener(new ActionListener()
+		{
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				populateSchemeNamesCbx();
 			}
 		});
@@ -112,7 +123,8 @@ public class TransactionReportPanel extends AbstractPanel {
 		return buttonPanel;
 	}
 
-	public GuiPanel getCenterPanel() {
+	public GuiPanel getCenterPanel()
+	{
 		GuiPanel centerPanel = new GuiPanel();
 
 		fromDateLbl = new JLabel("From Date");
@@ -162,8 +174,8 @@ public class TransactionReportPanel extends AbstractPanel {
 		return centerPanel;
 	}
 
-	private void setGridBagConstraints(GridBagConstraints c, int gridx,
-			int gridy, int placement, int paddingTop, int paddingLeft) {
+	private void setGridBagConstraints(GridBagConstraints c, int gridx, int gridy, int placement, int paddingTop, int paddingLeft)
+	{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = placement;
 		c.insets = new Insets(paddingTop, paddingLeft, 0, 0); // top and left
@@ -175,35 +187,42 @@ public class TransactionReportPanel extends AbstractPanel {
 		c.gridwidth = 1;
 	}
 
-	public GuiPanel getBannerPanel() {
+	public GuiPanel getBannerPanel()
+	{
 		GuiPanel bannerPanel = new GuiPanel();
 		bannerPanel.add(new JLabel("Transaction Report"), BorderLayout.CENTER);
 
 		return bannerPanel;
 	}
 
-	public void populateSchemeNamesCbx() {
-		if (schemeNamecbx == null) {
+	public void populateSchemeNamesCbx()
+	{
+		if (schemeNamecbx == null)
+		{
 			schemeNamecbx = new JComboBox<String>();
 		}
 		SchemeHandler handler = new SchemeHandler();
 		Vector<String> schemeNames = null;
-		try {
+		try
+		{
 			schemeNames = handler.getSchemeNames();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			new MessageDialog("Error", e.getMessage());
 		}
-		if (schemeNames == null) {
-			schemeNamecbx
-					.setModel(new javax.swing.DefaultComboBoxModel<String>());
-		} else {
-			schemeNamecbx
-					.setModel(new javax.swing.DefaultComboBoxModel<String>(
-							schemeNames));
+		if (schemeNames == null)
+		{
+			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>());
+		}
+		else
+		{
+			schemeNamecbx.setModel(new javax.swing.DefaultComboBoxModel<String>(schemeNames));
 		}
 	}
 
-	public void createAndShowGUI() {
+	public void createAndShowGUI()
+	{
 		setVisible(true);
 	}
 

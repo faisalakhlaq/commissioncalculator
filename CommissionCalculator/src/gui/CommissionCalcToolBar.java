@@ -23,22 +23,25 @@ import database.CashHandler;
 import database.SchemeHandler;
 
 @SuppressWarnings("serial")
-public class CommissionCalcToolBar extends JToolBar {
+public class CommissionCalcToolBar extends JToolBar
+{
 	private static CommissionCalcToolBar instance = null;
 
-	CommissionCalcToolBar() {
+	CommissionCalcToolBar()
+	{
 		setFloatable(true);
 		addButtons();
 	}
 
-	public static CommissionCalcToolBar getInstance() {
-		if (instance == null)
-			instance = new CommissionCalcToolBar();
+	public static CommissionCalcToolBar getInstance()
+	{
+		if (instance == null) instance = new CommissionCalcToolBar();
 
 		return instance;
 	}
 
-	public void addButtons() {
+	public void addButtons()
+	{
 		addExitBtn();
 		addTransactionBtn();
 		addCreateSchemeBtn();
@@ -51,24 +54,28 @@ public class CommissionCalcToolBar extends JToolBar {
 		addViewDailyHistryBtn();
 	}
 
-	private void addViewDailyHistryBtn() {
+	private void addViewDailyHistryBtn()
+	{
 		JButton viewDailyReportBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("View Daily Cash History");
 		viewDailyReportBtn.setToolTipText(toolTip.getTipText());
-		viewDailyReportBtn.addActionListener(new ActionListener() {
+		viewDailyReportBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				try
+				{
 					DesktopTabbedPane pane = DesktopTabbedPane.getInstance();
 					CashHandler handler = new CashHandler();
 					Vector<DailyCash> list;
 					list = handler.getAllCash();
-					new DisplayAllDailyCashPanel(list);
-					DisplayAllDailyCashPanel p = DisplayAllDailyCashPanel
-							.getInstance();
+					DisplayAllDailyCashPanel p = new DisplayAllDailyCashPanel(list);
 					pane.addPanel("Cash History", p);
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					new MessageDialog("Error", e.getMessage());
 				}
 			}
@@ -77,25 +84,30 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(viewDailyReportBtn, "/resources/Cash_History.png");
 	}
 
-	private void addDisplayAllSchemeBtn() {
+	private void addDisplayAllSchemeBtn()
+	{
 		JButton displayAllSchemeBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("Display All Scheme");
 		displayAllSchemeBtn.setToolTipText(toolTip.getTipText());
-		displayAllSchemeBtn.addActionListener(new ActionListener() {
+		displayAllSchemeBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 				SchemeHandler handler = new SchemeHandler();
-				try {
+				try
+				{
 					Vector<Scheme> schemeList = handler.getAllSchemes();
-					if (schemeList != null && schemeList.size() > 0) {
-						new DisplayAllSchemesPanel(schemeList);
-						DisplayAllSchemesPanel p = DisplayAllSchemesPanel
-								.getInstance();
+					if (schemeList != null && schemeList.size() > 0)
+					{
+						DisplayAllSchemesPanel p = new DisplayAllSchemesPanel(schemeList);
 						desktopPane.addPanel("Schemes", p);
 					}
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					new MessageDialog("Error", e.getMessage());
 				}
 			}
@@ -104,14 +116,17 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(displayAllSchemeBtn, "/resources/All_Scheme.png");
 	}
 
-	private void addEditSchemeBtn() {
+	private void addEditSchemeBtn()
+	{
 		JButton EditSchemeBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("Edit Scheme Name");
 		EditSchemeBtn.setToolTipText(toolTip.getTipText());
-		EditSchemeBtn.addActionListener(new ActionListener() {
+		EditSchemeBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 				EditSchemeNamePanel p = EditSchemeNamePanel.getInstance();
 				desktopPane.addPanel("Edit Scheme Name", p);
@@ -121,16 +136,19 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(EditSchemeBtn, "/resources/Edit_scheme.png");
 	}
 
-	private void addViewCashReportBtn() {
+	private void addViewCashReportBtn()
+	{
 		JButton ViewCashReportBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("View Cash Report");
 		ViewCashReportBtn.setToolTipText(toolTip.getTipText());
-		ViewCashReportBtn.addActionListener(new ActionListener() {
+		ViewCashReportBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
-				DailyCashReportPanel p = DailyCashReportPanel.getInstance();
+				DailyCashReportPanel p = new DailyCashReportPanel();
 				desktopPane.addPanel("Daily Cash Report", p);
 			}
 		});
@@ -138,14 +156,17 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(ViewCashReportBtn, "/resources/view-icon.png");
 	}
 
-	private void addDailyCashBtn() {
+	private void addDailyCashBtn()
+	{
 		JButton dailyCashBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("Insert Daily Cash");
 		dailyCashBtn.setToolTipText(toolTip.getTipText());
-		dailyCashBtn.addActionListener(new ActionListener() {
+		dailyCashBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 				DailyCashPanel p = DailyCashPanel.getInstance();
 				desktopPane.addPanel("Daily Cash", p);
@@ -155,14 +176,17 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(dailyCashBtn, "/resources/Money_icon.png");
 	}
 
-	private void addTransactioReportBtn() {
+	private void addTransactioReportBtn()
+	{
 		JButton trReportBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("Transaction Report");
 		trReportBtn.setToolTipText(toolTip.getTipText());
-		trReportBtn.addActionListener(new ActionListener() {
+		trReportBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 				desktopPane.showPanel("TRANSACTION_REPORT");
 			}
@@ -171,14 +195,17 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(trReportBtn, "/resources/report_icon.png");
 	}
 
-	private void addDeleteSchemeBtn() {
+	private void addDeleteSchemeBtn()
+	{
 		JButton deleteBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("Delete Scheme");
 		deleteBtn.setToolTipText(toolTip.getTipText());
-		deleteBtn.addActionListener(new ActionListener() {
+		deleteBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 				desktopPane.showPanel("DELETE_SCHEME");
 			}
@@ -187,14 +214,17 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(deleteBtn, "/resources/delete.png");
 	}
 
-	private void addCreateSchemeBtn() {
+	private void addCreateSchemeBtn()
+	{
 		JButton createSchemeBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("Create Scheme");
 		createSchemeBtn.setToolTipText(toolTip.getTipText());
-		createSchemeBtn.addActionListener(new ActionListener() {
+		createSchemeBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 				desktopPane.showPanel("SCHEME");
 			}
@@ -203,15 +233,18 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(createSchemeBtn, "/resources/add_scheme.png");
 	}
 
-	private void addTransactionBtn() {
+	private void addTransactionBtn()
+	{
 
 		JButton transactionBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("Transaction");
 		transactionBtn.setToolTipText(toolTip.getTipText());
-		transactionBtn.addActionListener(new ActionListener() {
+		transactionBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				DesktopTabbedPane desktopPane = DesktopTabbedPane.getInstance();
 				desktopPane.showPanel("TRANSACTION");
 			}
@@ -220,14 +253,17 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(transactionBtn, "/resources/transaction.png");
 	}
 
-	private void addExitBtn() {
+	private void addExitBtn()
+	{
 		JButton trBtn = new JButton();
 		JToolTip toolTip = new JToolTip();
 		toolTip.setTipText("Exit");
 		trBtn.setToolTipText(toolTip.getTipText());
-		trBtn.addActionListener(new ActionListener() {
+		trBtn.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				System.exit(0);
 			}
 		});
@@ -235,9 +271,11 @@ public class CommissionCalcToolBar extends JToolBar {
 		setIcon(trBtn, "/resources/exit-icon.png");
 	}
 
-	private void setIcon(JButton btn, String iconUrl) {
+	private void setIcon(JButton btn, String iconUrl)
+	{
 		ImageIcon icon = new ImageIcon(getClass().getResource(iconUrl));
-		if (icon != null) {
+		if (icon != null)
+		{
 			btn.setIcon(icon);
 		}
 	}
