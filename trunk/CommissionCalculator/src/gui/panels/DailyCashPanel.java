@@ -25,7 +25,7 @@ import database.CashHandler;
 public class DailyCashPanel extends AbstractPanel
 {
 	private static DailyCashPanel instance = null;
-	
+
 	private JLabel cashLbl = null;
 
 	private JLabel dateLbl = null;
@@ -46,9 +46,10 @@ public class DailyCashPanel extends AbstractPanel
 	{
 		addPanels();
 	}
-	public static DailyCashPanel getInstance() {
-		if (instance == null)
-			instance = new DailyCashPanel();
+
+	public static DailyCashPanel getInstance()
+	{
+		if (instance == null) instance = new DailyCashPanel();
 
 		return instance;
 	}
@@ -127,7 +128,8 @@ public class DailyCashPanel extends AbstractPanel
 					java.util.Date date = datePkr.getDate();
 
 					CashHandler handler = new CashHandler();
-					handler.insertCash(date,amount);
+					handler.insertCash(date, amount);
+					cashTxt.setText(null);
 					displayMessage(true);
 				}
 				catch (Exception e)
